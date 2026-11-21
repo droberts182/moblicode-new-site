@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="assets/logo.webp">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Moblicode</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Moblicode builds native iOS and Android apps and games, with AI built in. US-based, 19+ years shipping to the App Store and Google Play.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: bright, airy studio site. The logo's circuit traces become a quiet drawn motif; its purple→orange→teal gradient appears in exactly one place per screen. Real app screens carry the page. */
+:root{
+  --bg:#fbfbfe; --surface:#ffffff; --tint:#f3f1fb; --ink:#14152a; --muted:#5d6079; --line:#e5e5f0;
+  --accent:#5b34c9; --accent-ink:#ffffff; --accent-soft:#ece6ff;
+  --trace:#c9c2ea; --logo-plate:transparent;
+  --g1:#6a3fd0; --g2:#d2408e; --g3:#f2902e; --g4:#1db5c9;
+  --display:"Sora", "Avenir Next", system-ui, sans-serif;
+  --body:"Inter", system-ui, -apple-system, sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, Menlo, monospace;
+  --radius:18px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0d0e1b; --surface:#151729; --tint:#1a1b33; --ink:#eceefa; --muted:#a2a5c0; --line:#26283f;
+  --accent:#a68bff; --accent-ink:#140b33; --accent-soft:#2a2350; --trace:#34315a; --logo-plate:#ffffff; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0d0e1b; --surface:#151729; --tint:#1a1b33; --ink:#eceefa; --muted:#a2a5c0; --line:#26283f;
+  --accent:#a68bff; --accent-ink:#140b33; --accent-soft:#2a2350; --trace:#34315a; --logo-plate:#ffffff; color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+a{color:inherit}
+.wrap{max-width:1160px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance;letter-spacing:-.02em}
+h1{font-size:clamp(2.4rem,5.6vw,4.3rem);line-height:1.02;font-weight:800}
+h2{font-size:clamp(1.8rem,3.6vw,2.7rem);line-height:1.08;font-weight:700}
+h3{font-size:1.2rem;line-height:1.25;font-weight:700;letter-spacing:-.01em}
+p{margin:0;max-width:62ch}
+.eyebrow{font-family:var(--mono);font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.lede{font-size:1.15rem;color:var(--muted)}
+.grad{background:linear-gradient(95deg,var(--g1),var(--g2) 38%,var(--g3) 66%,var(--g4));-webkit-background-clip:text;background-clip:text;color:transparent}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:12px;padding:13px 20px;font:600 .95rem var(--body);cursor:pointer;background:var(--accent);color:var(--accent-ink);text-decoration:none;white-space:nowrap;transition:transform .15s, box-shadow .15s}
+.btn:hover{transform:translateY(-1px);box-shadow:0 8px 24px -10px var(--accent)}
+.btn.line{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn.line:hover{border-color:var(--accent);box-shadow:none}
+:focus-visible{outline:2px solid var(--g2);outline-offset:3px;border-radius:6px}
+section{padding-block:96px}
+.sec-head{display:flex;flex-direction:column;gap:14px;margin-bottom:48px}
+
+/* nav */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;height:88px}
+.brand{display:flex;align-items:center;text-decoration:none;background:var(--logo-plate);border-radius:12px;padding:2px 6px}
+.brand img{height:80px;width:auto;display:block}
+.nav ul{display:flex;gap:28px;list-style:none;margin:0;padding:0;font-size:.93rem;font-weight:500}
+.nav ul a{text-decoration:none;color:var(--muted)}
+.nav ul a:hover{color:var(--ink)}
+.nav .btn{padding:10px 16px;font-size:.88rem}
+@media (max-width:860px){.nav ul{display:none}}
+
+/* hero */
+.hero{position:relative;padding-block:72px 40px;overflow:hidden}
+.traces{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+.traces path{stroke:var(--trace);stroke-width:1.5;fill:none}
+.traces circle{fill:var(--bg);stroke:var(--trace);stroke-width:1.5}
+.hero .wrap{position:relative;z-index:1;display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+.hero .wrap>*{min-width:0}
+.hero-copy{display:flex;flex-direction:column;gap:22px}
+.scope-bar{display:flex;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:8px;box-shadow:0 20px 50px -30px rgba(40,20,110,.35);max-width:560px}
+.scope-bar input{flex:1;min-width:0;border:0;background:transparent;font:inherit;color:var(--ink);padding:8px 10px}
+.scope-bar input:focus{outline:none}
+.scope-bar:focus-within{border-color:var(--accent)}
+.hint{font-size:.85rem;color:var(--muted)}
+.hint a{color:var(--accent);font-weight:600;text-decoration:none}
+.stage{position:relative;height:540px}
+.stage img{position:absolute;height:auto;filter:drop-shadow(0 30px 40px rgba(20,10,60,.22))}
+.stage .s1{width:46%;left:2%;top:40px;transform:rotate(-4deg)}
+.stage .s2{width:44%;left:30%;top:0;z-index:2}
+.stage .s3{width:46%;right:0;top:60px;transform:rotate(4deg)}
+@media (prefers-reduced-motion:no-preference){
+  .stage img{animation:rise .8s cubic-bezier(.2,.8,.2,1) both}
+  .stage .s2{animation-delay:.08s}.stage .s3{animation-delay:.16s}
+  @keyframes rise{from{translate:0 24px}to{translate:0 0}}
+}
+@media (max-width:900px){
+  .hero .wrap{grid-template-columns:1fr}
+  .stage{height:auto;aspect-ratio:1.15;max-width:520px;width:100%;margin:0 auto}
+  .stage .s1,.stage .s3{top:12%}
+}
+
+/* proof */
+.proof{border-block:1px solid var(--line);background:var(--surface)}
+.proof .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+.proof div{padding:26px 20px;border-left:1px solid var(--line);display:flex;flex-direction:column;gap:2px}
+.proof div:first-child{border-left:0;padding-left:0}
+.proof b{font-family:var(--display);font-size:1.5rem;letter-spacing:-.02em}
+.proof span{font-size:.88rem;color:var(--muted)}
+@media (max-width:820px){.proof .wrap{grid-template-columns:1fr 1fr}.proof div:nth-child(3){border-left:0;padding-left:0}.proof div{border-top:1px solid var(--line)}.proof div:nth-child(-n+2){border-top:0}}
+
+/* work */
+.cases{display:flex;flex-direction:column;gap:28px}
+.case{display:grid;grid-template-columns:1fr 1fr;gap:0;background:var(--surface);border:1px solid var(--line);border-radius:24px;overflow:hidden}
+.case>*{min-width:0}
+.case .shot{background:var(--tint);display:flex;align-items:flex-end;justify-content:center;gap:4%;padding:40px 24px 0;min-height:360px;position:relative}
+.case .shot img{width:40%;max-width:230px;height:auto;display:block;margin-bottom:-6%;filter:drop-shadow(0 20px 30px rgba(20,10,60,.2))}
+.case .shot img+img{margin-bottom:-14%}
+.case .shot.wide{align-items:center;padding:32px}
+.case .shot.wide img{width:100%;max-width:520px;margin:0}
+.case .body{padding:40px;display:flex;flex-direction:column;gap:16px}
+.case:nth-child(even) .shot{order:2}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-family:var(--mono);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;padding:4px 9px;border-radius:999px;background:var(--accent-soft);color:var(--accent)}
+.case ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px;font-size:.94rem;color:var(--muted)}
+.case li{display:grid;grid-template-columns:14px 1fr;gap:10px}
+.case li::before{content:"";width:7px;height:7px;border-radius:50%;border:1.5px solid var(--accent);margin-top:.55em}
+.result{margin-top:auto;padding-top:16px;border-top:1px solid var(--line);display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.result b{font-family:var(--display);font-size:1.35rem;letter-spacing:-.02em}
+.result span{font-size:.88rem;color:var(--muted)}
+@media (max-width:860px){.case{grid-template-columns:1fr}.case:nth-child(even) .shot{order:0}.case .body{padding:28px}.case .shot{min-height:300px}}
+
+/* services */
+.svc{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:24px;overflow:hidden}
+.svc article{background:var(--surface);padding:32px;display:flex;flex-direction:column;gap:12px}
+.svc .ic{width:40px;height:40px}
+.svc .ic path,.svc .ic rect,.svc .ic circle{stroke:var(--accent);stroke-width:1.7;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.svc p{font-size:.94rem;color:var(--muted)}
+.svc .mono{font-family:var(--mono);font-size:.75rem;color:var(--muted);margin-top:auto}
+.svc article.ai{background:linear-gradient(160deg,var(--accent-soft),var(--surface) 70%)}
+@media (max-width:900px){.svc{grid-template-columns:1fr 1fr}}
+@media (max-width:600px){.svc{grid-template-columns:1fr}}
+
+/* scoper */
+.scoper-sec{background:var(--tint)}
+.scoper{display:grid;grid-template-columns:.9fr 1.1fr;gap:28px;align-items:start}
+.scoper>*{min-width:0}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:28px;display:flex;flex-direction:column;gap:14px}
+label{font-weight:600;font-size:.9rem}
+textarea,input,select{width:100%;border:1px solid var(--line);border-radius:12px;padding:12px 14px;font:inherit;background:var(--bg);color:var(--ink)}
+textarea{min-height:130px;resize:vertical}
+textarea:focus,input:focus,select:focus{outline:2px solid var(--accent);outline-offset:0;border-color:transparent}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:999px;padding:7px 13px;font:500 .83rem var(--body);cursor:pointer}
+.chip:hover{border-color:var(--accent);color:var(--accent)}
+.est{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.est>*{min-width:0}
+.est .full{grid-column:1/-1}
+.k{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.v{font-family:var(--display);font-size:1.8rem;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.1}
+.est ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:3px;font-size:.93rem}
+.pill{display:inline-block;font-size:.8rem;font-weight:600;padding:4px 10px;border-radius:999px;border:1px solid var(--line);margin:0 6px 6px 0}
+.gate{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap;padding-top:18px;border-top:1px solid var(--line)}
+.gate input{flex:1;min-width:200px}
+.fine{font-size:.78rem;color:var(--muted)}
+#est{transition:opacity .25s}
+@media (max-width:900px){.scoper{grid-template-columns:1fr}}
+@media (max-width:480px){.est{grid-template-columns:1fr}}
+
+/* process */
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,1fr);gap:20px;counter-reset:s;position:relative}
+.steps li{counter-increment:s;display:flex;flex-direction:column;gap:10px;position:relative}
+.steps li::before{content:counter(s);width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-family:var(--display);font-weight:700;background:var(--surface);border:1.5px solid var(--accent);color:var(--accent);position:relative;z-index:1}
+.steps::before{content:"";position:absolute;left:20px;right:20px;top:20px;border-top:1.5px dashed var(--trace)}
+.steps p{font-size:.92rem;color:var(--muted)}
+.steps .wk{font-family:var(--mono);font-size:.72rem;color:var(--muted)}
+@media (max-width:900px){.steps{grid-template-columns:1fr}.steps::before{left:20px;right:auto;top:20px;bottom:20px;border-top:0;border-left:1.5px dashed var(--trace)}.steps li{padding-left:56px}.steps li::before{position:absolute;left:0;top:0}}
+
+/* contact */
+.contact{display:grid;grid-template-columns:.85fr 1.15fr;gap:48px;align-items:start}
+.contact>*{min-width:0}
+.direct{display:flex;flex-direction:column;gap:22px}
+.direct dl{margin:0;display:grid;gap:16px}
+.direct dt{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.direct dd{margin:2px 0 0;font-size:1.1rem;font-weight:600;user-select:all}
+form .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+form .row>*{min-width:0;display:flex;flex-direction:column;gap:6px}
+form .field{display:flex;flex-direction:column;gap:6px}
+.opt{font-weight:400;color:var(--muted)}
+.sent{background:var(--accent-soft);color:var(--ink);border-radius:12px;padding:14px 16px;font-size:.92rem}
+@media (max-width:860px){.contact{grid-template-columns:1fr}}
+@media (max-width:520px){form .row{grid-template-columns:1fr}}
+
+/* footer */
+footer{border-top:1px solid var(--line);padding-block:48px}
+footer .wrap{display:flex;justify-content:space-between;gap:32px;flex-wrap:wrap;align-items:flex-start}
+footer .brand img{height:96px}
+footer nav{display:flex;gap:48px;flex-wrap:wrap;font-size:.92rem}
+footer nav div{display:flex;flex-direction:column;gap:8px}
+footer nav b{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:500}
+footer nav a{text-decoration:none}
+footer nav a:hover{color:var(--accent)}
+.copy{width:100%;font-size:.82rem;color:var(--muted);padding-top:24px;border-top:1px solid var(--line)}
+</style>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Moblicode home"><img src="assets/logo.webp" alt="Moblicode — Mobile App Development" width="62" height="62"></a>
+    <ul>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#scope">AI scoper</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a class="btn" href="#contact">Start a project</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <svg class="traces" viewBox="0 0 1200 640" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <path d="M0 120 H180 L230 170 H420"/><circle cx="420" cy="170" r="5"/>
+      <path d="M0 520 H120 L170 470 H300"/><circle cx="300" cy="470" r="5"/>
+      <path d="M1200 90 H1060 L1010 140 H900"/><circle cx="900" cy="140" r="5"/>
+      <path d="M1200 560 H1080 L1040 520 H960"/><circle cx="960" cy="520" r="5"/>
+      <path d="M60 0 V60 L100 100"/><circle cx="100" cy="100" r="5"/>
+      <path d="M1140 640 V600 L1100 560"/><circle cx="1100" cy="560" r="5"/>
+    </svg>
+    <div class="wrap">
+      <div class="hero-copy">
+        <div class="eyebrow">US-based · Native iOS &amp; Android · 19+ years</div>
+        <h1>Apps people use every day, <span class="grad">with AI built in.</span></h1>
+        <p class="lede">We design and build native SwiftUI and Kotlin apps and games, plus the backend and AI that power them. The team behind MyTSA, downloaded millions of times on the App Store.</p>
+        <form class="scope-bar" id="heroScope">
+          <label for="heroIdea" class="sr" style="position:absolute;left:-9999px">Describe your app idea</label>
+          <input id="heroIdea" placeholder="Describe your app idea in a sentence…" autocomplete="off">
+          <button class="btn" type="submit">Scope it free</button>
+        </form>
+        <p class="hint">Get a feature list, timeline and ballpark in seconds. Or <a href="#contact">book a 20-minute call</a>.</p>
+      </div>
+      <div class="stage" aria-label="Screens from apps Moblicode built">
+        <img class="s1" src="assets/wellness-1.png" alt="Launch to Wellness AI mindfulness guide chat on iPhone">
+        <img class="s2" src="assets/mytsa-2.png" alt="MyTSA airport wait time screen on iPhone">
+        <img class="s3" src="assets/rfx-1.png" alt="RecruitFluency athlete browser on iPhone">
+      </div>
+    </div>
+  </section>
+
+  <div class="proof">
+    <div class="wrap">
+      <div><b>Millions</b><span>of MyTSA downloads</span></div>
+      <div><b>19+ years</b><span>shipping to the App Store</span></div>
+      <div><b>Native</b><span>SwiftUI · Kotlin / Compose</span></div>
+      <div><b>AI in production</b><span>Conversational guide in a live app</span></div>
+    </div>
+  </div>
+
+  <section id="work">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">Selected work</div>
+        <h2>Shipped, used, and still running.</h2>
+        <p class="lede">From a federal travel app to an AI wellness companion, we build the whole thing: apps, backend, admin tools and store launch.</p>
+      </div>
+      <div class="cases">
+        <article class="case">
+          <div class="shot"><img src="assets/mytsa-1.png" alt="MyTSA Can I Bring search"><img src="assets/mytsa-2.png" alt="MyTSA checkpoint wait times"></div>
+          <div class="body">
+            <div class="tags"><span class="tag">iOS</span><span class="tag">Travel</span><span class="tag">Government</span></div>
+            <h3>MyTSA</h3>
+            <p>The official Transportation Security Administration app: 24/7 answers to the questions travelers ask TSA most.</p>
+            <ul><li>"Can I Bring?" search for carry-on and checked bags</li><li>Crowd-sourced and historical checkpoint wait times by airport, terminal, day and hour</li><li>FAA delay and weather status for favorite airports</li></ul>
+            <div class="result"><b>Millions</b><span>of downloads on the App Store</span></div>
+          </div>
+        </article>
+        <article class="case">
+          <div class="shot"><img src="assets/wellness-1.png" alt="Launch to Wellness AI guide"><img src="assets/wellness-2.png" alt="Launch to Wellness team screen"></div>
+          <div class="body">
+            <div class="tags"><span class="tag">iOS &amp; Android</span><span class="tag">AI</span><span class="tag">Health</span></div>
+            <h3>Launch to Wellness</h3>
+            <p>A mental-health support app connecting clients with therapeutic resources and with each other.</p>
+            <ul><li>AI chatbot that works as an on-demand conversational mindfulness guide</li><li>Community forum so clients can support one another</li><li>Firebase backend for auth, storage and real-time updates</li></ul>
+            <div class="result"><b>AI guide</b><span>available to clients around the clock</span></div>
+          </div>
+        </article>
+        <article class="case">
+          <div class="shot"><img src="assets/rfx-1.png" alt="RecruitFluency athlete list"><img src="assets/rfx-2.png" alt="RecruitFluency athlete profile"></div>
+          <div class="body">
+            <div class="tags"><span class="tag">iOS &amp; Android</span><span class="tag">Web</span><span class="tag">Sports</span></div>
+            <h3>RFX · RecruitFluency</h3>
+            <p>A soccer recruiting platform connecting high-school athletes with college coaches, built and owned end to end.</p>
+            <ul><li>Native SwiftUI and Jetpack Compose apps, Flutter admin portal, React club dashboard</li><li>NestJS + PostgreSQL backend on DigitalOcean and Vercel</li><li>Outreach engine emailing thousands of coaches with NCAA contact-window rules</li><li>Tiered subscriptions through RevenueCat</li></ul>
+            <div class="result"><b>Thousands</b><span>of college coaches reached automatically</span></div>
+          </div>
+        </article>
+        <article class="case">
+          <div class="shot wide"><img src="assets/gravball-1.png" alt="Gravball HD title screen on iPad"></div>
+          <div class="body">
+            <div class="tags"><span class="tag">iPad</span><span class="tag">Game</span></div>
+            <h3>Gravball HD</h3>
+            <p>A physics-driven iPad game with atmospheric visuals and progressive difficulty across timed levels.</p>
+            <ul><li>Responsive touch controls and smooth 60fps physics</li><li>Level system with escalating difficulty, HUD and score tracking</li><li>Logo, menus and in-game art designed in-house</li></ul>
+            <div class="result"><b>60fps</b><span>native physics on iPad</span></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="services" style="padding-top:24px">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">What we build</div>
+        <h2>One team from first sketch to store listing.</h2>
+      </div>
+      <div class="svc">
+        <article><svg class="ic" viewBox="0 0 40 40" aria-hidden="true"><rect x="12" y="4" width="16" height="32" rx="4"/><path d="M18 8h4"/></svg><h3>iOS apps</h3><p>Swift and SwiftUI for iPhone and iPad, using the latest Apple frameworks.</p><span class="mono">Swift · SwiftUI · iPadOS</span></article>
+        <article><svg class="ic" viewBox="0 0 40 40" aria-hidden="true"><rect x="11" y="5" width="18" height="30" rx="3"/><path d="M17 31h6"/></svg><h3>Android apps</h3><p>Kotlin and Jetpack Compose across the full range of Android phones and tablets.</p><span class="mono">Kotlin · Compose</span></article>
+        <article class="ai"><svg class="ic" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 6v6M20 28v6M6 20h6M28 20h6"/><circle cx="20" cy="20" r="7"/><circle cx="20" cy="6" r="2"/><circle cx="34" cy="20" r="2"/><circle cx="20" cy="34" r="2"/><circle cx="6" cy="20" r="2"/></svg><h3>AI features</h3><p>Chat assistants, camera and vision features, smart recommendations, and on-device AI that keeps data private. New apps or added to the one you have.</p><span class="mono">LLM APIs · Apple Foundation Models · Gemini Nano</span></article>
+        <article><svg class="ic" viewBox="0 0 40 40" aria-hidden="true"><rect x="6" y="7" width="28" height="8" rx="2"/><rect x="6" y="18" width="28" height="8" rx="2"/><path d="M11 11h2M11 22h2M20 30v4M14 34h12"/></svg><h3>Backend &amp; APIs</h3><p>Databases, APIs and admin dashboards that scale with your users.</p><span class="mono">Node · NestJS · PostgreSQL · Firebase</span></article>
+        <article><svg class="ic" viewBox="0 0 40 40" aria-hidden="true"><rect x="5" y="11" width="30" height="18" rx="6"/><path d="M12 17v6M9 20h6"/><circle cx="26" cy="18" r="1.5"/><circle cx="29" cy="22" r="1.5"/></svg><h3>Games</h3><p>2.5D and 3D games and worlds for iPhone and iPad with tight, responsive controls.</p><span class="mono">SpriteKit · SceneKit · Metal</span></article>
+        <article><svg class="ic" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 5v20M13 18l7 7 7-7"/><path d="M7 27v6h26v-6"/></svg><h3>Store launch</h3><p>App Store and Google Play releases, plus ad-hoc in-house distribution. 19+ years of submissions.</p><span class="mono">App Store · Google Play · TestFlight</span></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="scope" class="scoper-sec">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">AI project scoper</div>
+        <h2>Describe your app. See what it takes.</h2>
+        <p class="lede">Get a feature list, the AI features worth adding, a timeline and a ballpark range. Then talk it through with an engineer, not a salesperson.</p>
+      </div>
+      <div class="scoper">
+        <div class="panel">
+          <label for="idea">Your app idea</label>
+          <textarea id="idea">A meal-planning app for busy parents that scans the fridge with the camera, suggests recipes, and builds a weekly grocery list. Subscription.</textarea>
+          <div class="chips" role="group" aria-label="Example ideas">
+            <button class="chip" type="button" data-idea="A fitness app with an AI coach that adjusts workouts from Apple Health data, with in-app purchases.">AI fitness coach</button>
+            <button class="chip" type="button" data-idea="A booking app for a chain of 12 salons with staff calendars, payments and push reminders.">Salon booking</button>
+            <button class="chip" type="button" data-idea="A 3D puzzle game for iPad with daily challenges, leaderboards and ads.">iPad puzzle game</button>
+            <button class="chip" type="button" data-idea="An internal field-inspection app for technicians that works offline, takes photos, and uses AI to write the report.">Field inspections</button>
+          </div>
+          <button class="btn" id="go" type="button">Scope my app</button>
+        </div>
+        <div class="panel" id="est" aria-live="polite"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="process">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">How we work</div>
+        <h2>A clear path from idea to launch.</h2>
+      </div>
+      <ol class="steps">
+        <li><h3>Scope</h3><p>A call and a written scope with features, platforms and a fixed quote.</p><span class="wk">Week 1</span></li>
+        <li><h3>Design</h3><p>Clickable prototypes you can hold on your own phone before code starts.</p><span class="wk">Weeks 2–3</span></li>
+        <li><h3>Build</h3><p>Native apps and backend in two-week sprints, with a TestFlight build every sprint.</p><span class="wk">Sprint by sprint</span></li>
+        <li><h3>Launch</h3><p>Store listings, review submission and release. We know what gets approved.</p><span class="wk">Launch week</span></li>
+        <li><h3>Grow</h3><p>OS updates, new features, analytics and AI improvements after launch.</p><span class="wk">Ongoing</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="contact" style="background:var(--tint)">
+    <div class="wrap contact">
+      <div class="direct">
+        <div class="eyebrow">Start a project</div>
+        <h2>Tell us what you want to build.</h2>
+        <p class="lede">Startups and established businesses, any App Store category. Free consultation and a personalized quote.</p>
+        <dl>
+          <div><dt>Email</dt><dd>support@moblicode.com</dd></div>
+          <div><dt>Phone</dt><dd>747 755 1281</dd></div>
+        </dl>
+      </div>
+      <form class="panel" id="contactForm" novalidate>
+        <div class="row">
+          <div><label for="cName">Name</label><input id="cName" required autocomplete="name"></div>
+          <div><label for="cEmail">Email</label><input id="cEmail" type="email" required autocomplete="email"></div>
+        </div>
+        <div class="row">
+          <div><label for="cCompany">Company <span class="opt">(optional)</span></label><input id="cCompany" autocomplete="organization"></div>
+          <div><label for="cPhone">Phone <span class="opt">(optional)</span></label><input id="cPhone" type="tel" autocomplete="tel"></div>
+        </div>
+        <div class="row">
+          <div><label for="cBudget">Budget</label><select id="cBudget"><option>Not sure yet</option><option>Under $25k</option><option>$25k–$75k</option><option>$75k–$150k</option><option>$150k+</option></select></div>
+          <div><label for="cWhen">Timeline</label><select id="cWhen"><option>Flexible</option><option>Within 3 months</option><option>3–6 months</option><option>6+ months</option></select></div>
+        </div>
+        <div class="field"><label for="cMsg">What are you building?</label><textarea id="cMsg" required placeholder="The problem, who it's for, and any must-have features."></textarea></div>
+        <button class="btn" type="submit">Send inquiry</button>
+        <div id="sent" class="sent" hidden></div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Moblicode home"><img src="assets/logo.webp" alt="Moblicode — Mobile App Development" width="96" height="96"></a>
+    <nav aria-label="Footer">
+      <div><b>Company</b><a href="#work">Work</a><a href="#services">Services</a><a href="#process">Process</a></div>
+      <div><b>Services</b><a href="#services">iOS</a><a href="#services">Android</a><a href="#services">AI features</a></div>
+      <div><b>Contact</b><span>support@moblicode.com</span><span>747 755 1281</span><a href="https://www.linkedin.com/in/ttm182/">LinkedIn</a></div>
+    </nav>
+    <p class="copy">© 2026 Moblicode. iOS and Android app &amp; game development.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const idea=document.getElementById('idea'), est=document.getElementById('est');
+  const has=(t,ws)=>ws.some(w=>t.includes(w));
+  function scope(raw){
+    const t=raw.toLowerCase();
+    const f=["Sign in with Apple / Google / email","Onboarding and profiles","Push notifications","Analytics and crash reporting"];
+    const ai=[]; let pts=4;
+    if(has(t,["game","puzzle","3d","level"])){f.push("Game loop, levels and scoring","Leaderboards (Game Center / Play Games)");pts+=5;}
+    if(has(t,["subscription","in-app","purchase","pay"])){f.push("Subscriptions and payments");pts+=2;}
+    if(has(t,["book","calendar","schedul","appointment","salon"])){f.push("Booking and staff calendars","Admin dashboard");pts+=4;}
+    if(has(t,["camera","scan","photo","vision"])){ai.push("Vision: recognize items in camera photos");pts+=3;}
+    if(has(t,["ai","coach","chat","assistant"])){ai.push("Conversational AI assistant");pts+=3;}
+    if(has(t,["report","write","summar","inspection"])){ai.push("AI-written reports and summaries");pts+=2;}
+    if(has(t,["recipe","suggest","recommend","plan","workout"])){ai.push("Personalized recommendations");pts+=2;}
+    if(has(t,["offline","field"])){f.push("Offline mode and background sync");pts+=3;}
+    if(has(t,["health","fitness","workout"])){f.push("Apple Health / Health Connect");pts+=2;}
+    if(has(t,["leaderboard","community","forum","social"])){f.push("Community features");pts+=2;}
+    if(has(t,["ads"])){f.push("Ad integration");pts+=1;}
+    if(has(t,["grocery","list"])){f.push("Shared lists");pts+=1;}
+    if(!ai.length) ai.push("On-device smart suggestions (private, no server cost)");
+    f.push("Backend, database and API","App Store and Google Play launch");
+    const plat=has(t,["ipad"])?["iPad"]:["iPhone","Android"];
+    if(has(t,["internal","technician"])) plat.push("In-house distribution");
+    return {f,ai,plat,lo:Math.round(pts*5.5),hi:Math.round(pts*9),wk:[Math.max(8,pts+4),pts+10]};
+  }
+  function render(){
+    const r=scope(idea.value||"");
+    est.style.opacity=.35;
+    setTimeout(()=>{
+      est.innerHTML=`
+        <div class="est">
+          <div><div class="k">Ballpark</div><div class="v">$${r.lo}k–$${r.hi}k</div></div>
+          <div><div class="k">Timeline</div><div class="v">${r.wk[0]}–${r.wk[1]} wks</div></div>
+          <div class="full"><div class="k">Platforms</div>${r.plat.map(p=>`<span class="pill">${p}</span>`).join("")}</div>
+          <div><div class="k">Core features</div><ul>${r.f.map(x=>`<li>${x}</li>`).join("")}</ul></div>
+          <div><div class="k">AI worth adding</div><ul>${r.ai.map(x=>`<li>${x}</li>`).join("")}</ul></div>
+          <form class="gate" id="gate"><label for="gEmail" style="position:absolute;left:-9999px">Email</label><input id="gEmail" type="email" placeholder="you@company.com" autocomplete="email"><button class="btn" type="submit">Email me the full scope</button></form>
+          <p class="fine full" id="gateMsg">A starting point, not a quote. We confirm scope and price on a free call.</p>
+        </div>`;
+      est.style.opacity=1;
+      document.getElementById('gate').addEventListener('submit',e=>{e.preventDefault();document.getElementById('gateMsg').textContent="Design preview: email delivery isn't connected yet.";});
+    },180);
+  }
+  document.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{idea.value=c.dataset.idea;render();}));
+  document.getElementById('go').addEventListener('click',render);
+  document.getElementById('heroScope').addEventListener('submit',e=>{
+    e.preventDefault();
+    const v=document.getElementById('heroIdea').value.trim();
+    if(v) idea.value=v;
+    render();
+    document.getElementById('scope').scrollIntoView();
+  });
+  document.getElementById('contactForm').addEventListener('submit',e=>{
+    e.preventDefault();
+    const s=document.getElementById('sent'); s.hidden=false;
+    s.textContent="Design preview: this form isn't connected yet. On the live site it would send your inquiry to support@moblicode.com.";
+  });
+  render();
+})();
+</script>
