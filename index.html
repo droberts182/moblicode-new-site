@@ -6,6 +6,10 @@
 <link rel="icon" href="assets/logo.webp?v=6">
 <style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>Moblicode</title>
+<script>
+  // Always open at the top: stop the browser from restoring an old scroll position on reload.
+  try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch (e) {}
+</script>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="description" content="Moblicode builds native iOS and Android apps and games, with AI built in. US-based, 19+ years shipping to the App Store and Google Play.">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
@@ -740,6 +744,17 @@ footer nav a:hover{color:var(--accent)}
   document.querySelectorAll('.proof .wrap > div, .svc article').forEach(cell=>{
     cell.addEventListener('pointermove',e=>{ const r=cell.getBoundingClientRect(); cell.style.setProperty('--mx',(e.clientX-r.left)+'px'); cell.style.setProperty('--my',(e.clientY-r.top)+'px'); });
   });
+
+  // Page load position: top of the page, unless the link points at a section (#contact, #work, ...).
+  // For section links, jump again once images and 3D scenes have loaded so late layout shifts don't leave us a section short.
+  (function(){
+    const target=()=>{ const id=decodeURIComponent(location.hash.slice(1)); return id && document.getElementById(id); };
+    let userMoved=false;
+    ['wheel','touchstart','keydown','pointerdown'].forEach(ev=>addEventListener(ev,()=>{ userMoved=true; },{passive:true,once:true}));
+    const go=()=>{ if(userMoved) return; const t=target(); if(t) t.scrollIntoView({behavior:'instant',block:'start'}); else window.scrollTo({top:0,left:0,behavior:'instant'}); };
+    go();
+    addEventListener('load',()=>{ go(); setTimeout(go,400); });
+  })();
 
   // Hero circuit lines: a glowing pulse runs along each trace into its end dot.
   // Every other trace runs in reverse so pulses move left-to-right and right-to-left.
