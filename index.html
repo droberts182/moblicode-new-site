@@ -91,6 +91,14 @@ section{padding-block:96px}
   .stage{height:auto;aspect-ratio:1.15;max-width:520px;width:100%;margin:0 auto}
   .stage .s1,.stage .s3{top:12%}
 }
+/* 3D phones: the canvas replaces the flat images once WebGL is running */
+.stage canvas{position:absolute;inset:-6% -10%;width:120%;height:112%;display:block;cursor:grab;touch-action:pan-y;opacity:0;transition:opacity .6s}
+.stage canvas.dragging{cursor:grabbing}
+.stage.is3d canvas{opacity:1}
+.stage.is3d img{visibility:hidden}
+.stage .drag-hint{position:absolute;left:50%;bottom:-6px;transform:translateX(-50%);font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);opacity:0;transition:opacity .6s;white-space:nowrap;pointer-events:none}
+.stage.is3d .drag-hint{opacity:.8}
+@media (max-width:900px){.stage canvas{inset:-4% -6%;width:112%;height:108%}}
 
 /* proof */
 .proof{border-block:1px solid var(--line);background:var(--surface)}
@@ -241,7 +249,11 @@ footer nav a:hover{color:var(--accent)}
         <img class="s1" src="assets/wellness-1.png" alt="Launch to Wellness AI mindfulness guide chat on iPhone">
         <img class="s2" src="assets/mytsa-2.png" alt="MyTSA airport wait time screen on iPhone">
         <img class="s3" src="assets/rfx-1.png" alt="RecruitFluency athlete browser on iPhone">
+        <canvas id="phones3d" aria-hidden="true"></canvas>
+        <span class="drag-hint">Drag to spin</span>
       </div>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+      <script src="assets/phones3d.js" defer></script>
     </div>
   </section>
 
