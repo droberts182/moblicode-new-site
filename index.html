@@ -145,6 +145,13 @@ section{padding-block:96px;scroll-margin-top:96px}
 .case .shot img+img{transform:translateY(-14px)}
 .case .shot.wide{align-items:center;padding:32px}
 .case .shot.wide img{width:100%;max-width:480px;height:auto;margin:0}
+.case .shot canvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab;touch-action:pan-y;opacity:0;transition:opacity .6s}
+.case .shot canvas.dragging{cursor:grabbing}
+.case .shot.is3d canvas{opacity:1}
+.case .shot.is3d img{visibility:hidden}
+.case .shot .drag-hint{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);opacity:0;transition:opacity .6s;white-space:nowrap;pointer-events:none}
+.case .shot.is3d .drag-hint{opacity:.75}
+.case .shot{overflow:hidden}
 .case .body{padding:40px;display:flex;flex-direction:column;gap:16px}
 .case:nth-child(even) .shot{order:2}
 .tags{display:flex;flex-wrap:wrap;gap:6px}
@@ -155,7 +162,7 @@ section{padding-block:96px;scroll-margin-top:96px}
 .result{margin-top:auto;padding-top:16px;border-top:1px solid var(--line);display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
 .result b{font-family:var(--display);font-size:1.35rem;letter-spacing:-.02em}
 .result span{font-size:.88rem;color:var(--muted)}
-@media (max-width:860px){.case{grid-template-columns:1fr}.case:nth-child(even) .shot{order:0}.case .body{padding:28px}.case .shot{min-height:0;padding:32px 20px}.case .shot img{height:220px}}
+@media (max-width:860px){.case{grid-template-columns:1fr}.case:nth-child(even) .shot{order:0}.case .body{padding:28px}.case .shot{min-height:320px;padding:32px 20px}.case .shot img{height:220px}}
 
 /* services */
 .svc{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:24px;overflow:hidden}
@@ -359,7 +366,7 @@ footer nav a:hover{color:var(--accent)}
         <span class="drag-hint">Drag to spin</span>
       </div>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
-      <script src="assets/phones3d.js?v=6" defer></script>
+      <script src="assets/phones3d.js?v=8" defer></script>
     </div>
   </section>
 
@@ -558,7 +565,7 @@ footer nav a:hover{color:var(--accent)}
       </div>
       <div class="cases">
         <article class="case">
-          <div class="shot"><img src="assets/mytsa-1.png?v=6" alt="MyTSA Can I Bring search"><img src="assets/mytsa-2.png?v=6" alt="MyTSA checkpoint wait times"></div>
+          <div class="shot" data-devices='[{"src":"assets/screen-mytsa-bring.png?v=8","aspect":0.46099290780141844,"finish":"natural","pos":[-0.5,-0.02,-0.15],"ry":0.34},{"src":"assets/screen-mytsa.png?v=6","aspect":0.46709129511677283,"finish":"blue","pos":[0.5,0.04,0.1],"ry":-0.28}]'><img src="assets/mytsa-1.png?v=6" alt="MyTSA Can I Bring search"><img src="assets/mytsa-2.png?v=6" alt="MyTSA checkpoint wait times"></div>
           <div class="body">
             <div class="tags"><span class="tag">iOS</span><span class="tag">Travel</span><span class="tag">Government</span></div>
             <h3>MyTSA</h3>
@@ -568,7 +575,7 @@ footer nav a:hover{color:var(--accent)}
           </div>
         </article>
         <article class="case">
-          <div class="shot"><img src="assets/wellness-3.png?v=6" alt="Launch to Wellness treatment programs screen"><img src="assets/wellness-2.png?v=6" alt="Launch to Wellness team screen"></div>
+          <div class="shot" data-devices='[{"src":"assets/screen-wellness-info.png?v=6","aspect":0.46099290780141844,"finish":"natural","pos":[-0.5,-0.02,-0.15],"ry":0.34},{"src":"assets/screen-wellness-team.png?v=8","aspect":0.46099290780141844,"finish":"silver","pos":[0.5,0.04,0.1],"ry":-0.28}]'><img src="assets/wellness-3.png?v=6" alt="Launch to Wellness treatment programs screen"><img src="assets/wellness-2.png?v=6" alt="Launch to Wellness team screen"></div>
           <div class="body">
             <div class="tags"><span class="tag">iOS &amp; Android</span><span class="tag">AI</span><span class="tag">Health</span></div>
             <h3>Launch to Wellness</h3>
@@ -578,7 +585,7 @@ footer nav a:hover{color:var(--accent)}
           </div>
         </article>
         <article class="case">
-          <div class="shot"><img src="assets/rfx-1.png?v=6" alt="RecruitFluency athlete list"><img src="assets/rfx-2.png?v=6" alt="RecruitFluency athlete profile"></div>
+          <div class="shot" data-devices='[{"src":"assets/screen-rfx.png?v=6","aspect":0.44620723847297966,"finish":"black","pos":[-0.5,-0.02,-0.15],"ry":0.34},{"src":"assets/screen-rfx-interest.png?v=8","aspect":0.4488330341113106,"finish":"natural","pos":[0.5,0.04,0.1],"ry":-0.28}]'><img src="assets/rfx-1.png?v=6" alt="RecruitFluency athlete list"><img src="assets/rfx-2.png?v=6" alt="RecruitFluency athlete profile"></div>
           <div class="body">
             <div class="tags"><span class="tag">iOS &amp; Android</span><span class="tag">Web</span><span class="tag">Sports</span></div>
             <h3>RFX · RecruitFluency</h3>
@@ -588,7 +595,7 @@ footer nav a:hover{color:var(--accent)}
           </div>
         </article>
         <article class="case">
-          <div class="shot wide"><img src="assets/gravball-1.png?v=6" alt="Gravball HD title screen on iPad"></div>
+          <div class="shot wide" data-devices='[{"kind":"tablet","src":"assets/screen-gravball.png?v=8","aspect":1.3333333333333333,"finish":"black","pos":[0,0,0],"ry":-0.22}]'><img src="assets/gravball-1.png?v=6" alt="Gravball HD title screen on iPad"></div>
           <div class="body">
             <div class="tags"><span class="tag">iPad</span><span class="tag">Game</span></div>
             <h3>Gravball HD</h3>
