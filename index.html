@@ -76,7 +76,15 @@ section{padding-block:96px;scroll-margin-top:96px}
 
 /* hero */
 .hero{position:relative;padding-block:72px 40px;overflow:hidden}
-.traces{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+.traces{position:absolute;width:300px;height:130px;pointer-events:none;z-index:0;overflow:visible}
+.traces.tl{top:14px;left:0}
+.traces.bl{bottom:6px;left:0}
+.traces.tr{top:14px;right:0}
+.traces.br{bottom:6px;right:0}
+/* below this width the text column reaches the left edge, so the left pieces would sit under the copy */
+@media (max-width:1240px){.traces.tl{display:none}}
+@media (max-width:1700px){.traces.bl{display:none}}
+@media (max-width:520px){.traces{width:220px;height:95px}}
 .traces path{stroke:var(--trace);stroke-width:1.5;fill:none}
 .traces circle{fill:var(--bg);stroke:var(--trace);stroke-width:1.5}
 .traces .spark{stroke:var(--accent);stroke-width:3;stroke-linecap:round;opacity:0;filter:drop-shadow(0 0 3px var(--accent)) drop-shadow(0 0 8px var(--accent)) drop-shadow(0 0 16px var(--g2))}
@@ -353,13 +361,20 @@ footer nav a:hover{color:var(--accent)}
 
 <main id="top">
   <section class="hero">
-    <svg class="traces" viewBox="0 0 1200 640" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-      <path d="M0 64 H110 L140 94 H230"/><circle cx="230" cy="94" r="5"/>
-      <path d="M0 612 H70 L100 582 H170"/><circle cx="170" cy="582" r="5"/>
-      <path d="M1200 90 H1060 L1010 140 H900"/><circle cx="900" cy="140" r="5"/>
-      <path d="M1200 560 H1080 L1040 520 H960"/><circle cx="960" cy="520" r="5"/>
-      <path d="M60 0 V60 L100 100"/><circle cx="100" cy="100" r="5"/>
-      <path d="M1140 640 V600 L1100 560"/><circle cx="1100" cy="560" r="5"/>
+    <!-- circuit traces: four fixed-size corner pieces, so they are never cropped on wide or short screens -->
+    <svg class="traces tl" viewBox="0 0 300 130" aria-hidden="true">
+      <path d="M0 34 H120 L156 70 H250"/><circle cx="250" cy="70" r="5"/>
+      <path d="M52 0 V22 L92 62"/><circle cx="92" cy="62" r="5"/>
+    </svg>
+    <svg class="traces bl" viewBox="0 0 300 130" aria-hidden="true">
+      <path d="M0 96 H96 L132 60 H226"/><circle cx="226" cy="60" r="5"/>
+    </svg>
+    <svg class="traces tr" viewBox="0 0 300 130" aria-hidden="true">
+      <path d="M300 34 H190 L150 74 H54"/><circle cx="54" cy="74" r="5"/>
+    </svg>
+    <svg class="traces br" viewBox="0 0 300 130" aria-hidden="true">
+      <path d="M300 92 H200 L162 54 H78"/><circle cx="78" cy="54" r="5"/>
+      <path d="M252 130 V112 L216 76"/><circle cx="216" cy="76" r="5"/>
     </svg>
     <div class="wrap">
       <div class="hero-copy">
