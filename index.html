@@ -49,7 +49,7 @@ p{margin:0;max-width:62ch}
 .grad{background:linear-gradient(95deg,var(--g1),var(--g2) 38%,var(--g3) 66%,var(--g4));-webkit-background-clip:text;background-clip:text;color:transparent}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:12px;padding:13px 20px;font:600 .95rem var(--body);cursor:pointer;background:var(--accent);color:var(--accent-ink);text-decoration:none;white-space:nowrap;transition:transform .15s, box-shadow .15s}
 .btn:hover{transform:translateY(-1px);box-shadow:0 8px 24px -10px var(--accent)}
-.btn.line{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn.line{background:var(--surface);color:var(--ink);border:1px solid var(--line);position:relative;z-index:1}
 .btn.line:hover{border-color:var(--accent);box-shadow:none}
 :focus-visible{outline:2px solid var(--g2);outline-offset:3px;border-radius:6px}
 section{padding-block:96px;scroll-margin-top:96px}
@@ -347,8 +347,8 @@ footer nav a:hover{color:var(--accent)}
 <main id="top">
   <section class="hero">
     <svg class="traces" viewBox="0 0 1200 640" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-      <path d="M0 120 H180 L230 170 H420"/><circle cx="420" cy="170" r="5"/>
-      <path d="M0 520 H120 L170 470 H300"/><circle cx="300" cy="470" r="5"/>
+      <path d="M0 64 H110 L140 94 H230"/><circle cx="230" cy="94" r="5"/>
+      <path d="M0 612 H70 L100 582 H170"/><circle cx="170" cy="582" r="5"/>
       <path d="M1200 90 H1060 L1010 140 H900"/><circle cx="900" cy="140" r="5"/>
       <path d="M1200 560 H1080 L1040 520 H960"/><circle cx="960" cy="520" r="5"/>
       <path d="M60 0 V60 L100 100"/><circle cx="100" cy="100" r="5"/>
@@ -361,7 +361,6 @@ footer nav a:hover{color:var(--accent)}
         <p class="lede">We develop custom iOS and Android apps and games for phones and tablets, plus internal web and mobile solutions that run your business. From first idea to launch.</p>
         <div class="hero-ctas">
           <a class="btn" href="#contact">Start a project</a>
-          <a class="btn line" href="#work">See our work</a>
         </div>
         <p class="hint">Free consultation and a personalized quote.</p>
       </div>
