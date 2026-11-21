@@ -158,31 +158,40 @@ section{padding-block:96px;scroll-margin-top:96px}
 @media (max-width:900px){.svc{grid-template-columns:1fr 1fr}}
 @media (max-width:600px){.svc{grid-template-columns:1fr}}
 
-/* scoper */
-.scoper-sec{background:var(--tint)}
-.scoper{display:grid;grid-template-columns:.9fr 1.1fr;gap:28px;align-items:start}
-.scoper>*{min-width:0}
+/* forms */
 .panel{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:28px;display:flex;flex-direction:column;gap:14px}
 label{font-weight:600;font-size:.9rem}
 textarea,input,select{width:100%;border:1px solid var(--line);border-radius:12px;padding:12px 14px;font:inherit;background:var(--bg);color:var(--ink)}
 textarea{min-height:130px;resize:vertical}
-textarea:focus,input:focus,select:focus{outline:2px solid var(--accent);outline-offset:0;border-color:transparent}
-.chips{display:flex;flex-wrap:wrap;gap:8px}
-.chip{border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:999px;padding:7px 13px;font:500 .83rem var(--body);cursor:pointer}
-.chip:hover{border-color:var(--accent);color:var(--accent)}
-.est{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.est>*{min-width:0}
-.est .full{grid-column:1/-1}
-.k{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
-.v{font-family:var(--display);font-size:1.8rem;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.1}
-.est ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:3px;font-size:.93rem}
-.pill{display:inline-block;font-size:.8rem;font-weight:600;padding:4px 10px;border-radius:999px;border:1px solid var(--line);margin:0 6px 6px 0}
-.gate{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap;padding-top:18px;border-top:1px solid var(--line)}
-.gate input{flex:1;min-width:200px}
-.fine{font-size:.78rem;color:var(--muted)}
-#est{transition:opacity .25s}
-@media (max-width:900px){.scoper{grid-template-columns:1fr}}
-@media (max-width:480px){.est{grid-template-columns:1fr}}
+textarea,input,select{transition:border-color .15s, box-shadow .15s}
+textarea:hover,input:hover{border-color:color-mix(in srgb,var(--accent) 35%,var(--line))}
+textarea:focus,input:focus,select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+
+/* custom dropdowns (enhance the native selects) */
+.dd{position:relative}
+.dd-native{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.dd-btn{width:100%;display:flex;align-items:center;gap:12px;padding:9px 12px 9px 9px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);font:inherit;text-align:left;cursor:pointer;transition:border-color .15s, box-shadow .15s, background .15s}
+.dd-btn:hover{border-color:color-mix(in srgb,var(--accent) 35%,var(--line))}
+.dd-btn:focus-visible,.dd.open .dd-btn{outline:none;border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.dd-ico{width:32px;height:32px;border-radius:9px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;flex:none}
+.dd-ico svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.dd-val{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.25}
+.dd-val b{font-weight:600;font-size:.95rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dd-val small{font-size:.76rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dd-chev{width:18px;height:18px;flex:none;fill:none;stroke:var(--muted);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s}
+.dd.open .dd-chev{transform:rotate(180deg);stroke:var(--accent)}
+.dd-list{position:absolute;z-index:40;left:0;right:0;top:calc(100% + 8px);margin:0;padding:6px;list-style:none;background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:0 28px 60px -24px rgba(20,10,60,.45),0 4px 12px -6px rgba(20,10,60,.15);opacity:0;transform:translateY(-6px) scale(.98);transform-origin:top;pointer-events:none;transition:opacity .16s, transform .16s;max-height:320px;overflow:auto}
+.dd.open .dd-list{opacity:1;transform:none;pointer-events:auto}
+.dd.up .dd-list{top:auto;bottom:calc(100% + 8px);transform-origin:bottom}
+.dd-opt{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;cursor:pointer}
+.dd-opt span{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.3}
+.dd-opt b{font-weight:500;font-size:.94rem}
+.dd-opt small{font-size:.76rem;color:var(--muted)}
+.dd-opt.active{background:var(--tint)}
+.dd-opt[aria-selected="true"] b{font-weight:700;color:var(--accent)}
+.dd-tick{width:18px;height:18px;flex:none;fill:none;stroke:var(--accent);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;opacity:0;transform:scale(.6);transition:opacity .15s, transform .15s}
+.dd-opt[aria-selected="true"] .dd-tick{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.dd-list,.dd-chev,.dd-tick{transition:none}}
 
 /* process */
 .steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,1fr);gap:20px;counter-reset:s;position:relative}
@@ -288,7 +297,6 @@ footer nav a:hover{color:var(--accent)}
       <li><a href="#work">Work</a></li>
       <li><a href="#services">Services</a></li>
       <li><a href="#backend">Backend</a></li>
-      <li><a href="#scope">AI scoper</a></li>
       <li><a href="#process">Process</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
@@ -320,9 +328,9 @@ footer nav a:hover{color:var(--accent)}
         <form class="scope-bar" id="heroScope">
           <label for="heroIdea" class="sr" style="position:absolute;left:-9999px">Describe your app idea</label>
           <input id="heroIdea" placeholder="Describe your app idea in a sentence…" autocomplete="off">
-          <button class="btn" type="submit">Scope it free</button>
+          <button class="btn" type="submit">Get started</button>
         </form>
-        <p class="hint">Get a feature list, timeline and ballpark in seconds. Or <a href="#contact">book a 20-minute call</a>.</p>
+        <p class="hint">Free consultation and a personalized quote. Or <a href="#contact">book a 20-minute call</a>.</p>
       </div>
       <div class="stage" aria-label="Screens from apps Moblicode built">
         <img class="s1" src="assets/wellness-3.png?v=6" alt="Launch to Wellness treatment programs screen on iPhone">
@@ -345,59 +353,7 @@ footer nav a:hover{color:var(--accent)}
     </div>
   </div>
 
-  <section id="work">
-    <div class="wrap">
-      <div class="sec-head">
-        <div class="eyebrow">Selected work</div>
-        <h2>Shipped, used, and still running.</h2>
-        <p class="lede">From a federal travel app to an AI wellness companion, we build the whole thing: apps, backend, admin tools and store launch.</p>
-      </div>
-      <div class="cases">
-        <article class="case">
-          <div class="shot"><img src="assets/mytsa-1.png?v=6" alt="MyTSA Can I Bring search"><img src="assets/mytsa-2.png?v=6" alt="MyTSA checkpoint wait times"></div>
-          <div class="body">
-            <div class="tags"><span class="tag">iOS</span><span class="tag">Travel</span><span class="tag">Government</span></div>
-            <h3>MyTSA</h3>
-            <p>The official Transportation Security Administration app: 24/7 answers to the questions travelers ask TSA most.</p>
-            <ul><li>"Can I Bring?" search for carry-on and checked bags</li><li>Crowd-sourced and historical checkpoint wait times by airport, terminal, day and hour</li><li>FAA delay and weather status for favorite airports</li></ul>
-            <div class="result"><b>Millions</b><span>of downloads on the App Store</span></div>
-          </div>
-        </article>
-        <article class="case">
-          <div class="shot"><img src="assets/wellness-3.png?v=6" alt="Launch to Wellness treatment programs screen"><img src="assets/wellness-2.png?v=6" alt="Launch to Wellness team screen"></div>
-          <div class="body">
-            <div class="tags"><span class="tag">iOS &amp; Android</span><span class="tag">AI</span><span class="tag">Health</span></div>
-            <h3>Launch to Wellness</h3>
-            <p>A mental-health support app connecting clients with therapeutic resources and with each other.</p>
-            <ul><li>AI chatbot that works as an on-demand conversational mindfulness guide</li><li>Community forum so clients can support one another</li><li>Firebase backend for auth, storage and real-time updates</li></ul>
-            <div class="result"><b>AI guide</b><span>available to clients around the clock</span></div>
-          </div>
-        </article>
-        <article class="case">
-          <div class="shot"><img src="assets/rfx-1.png?v=6" alt="RecruitFluency athlete list"><img src="assets/rfx-2.png?v=6" alt="RecruitFluency athlete profile"></div>
-          <div class="body">
-            <div class="tags"><span class="tag">iOS &amp; Android</span><span class="tag">Web</span><span class="tag">Sports</span></div>
-            <h3>RFX · RecruitFluency</h3>
-            <p>A soccer recruiting platform connecting high-school athletes with college coaches, built and owned end to end.</p>
-            <ul><li>Native SwiftUI and Jetpack Compose apps, Flutter admin portal, React club dashboard</li><li>NestJS + PostgreSQL backend on DigitalOcean and Vercel</li><li>Outreach engine emailing thousands of coaches with NCAA contact-window rules</li><li>Tiered subscriptions through RevenueCat</li></ul>
-            <div class="result"><b>Thousands</b><span>of college coaches reached automatically</span></div>
-          </div>
-        </article>
-        <article class="case">
-          <div class="shot wide"><img src="assets/gravball-1.png?v=6" alt="Gravball HD title screen on iPad"></div>
-          <div class="body">
-            <div class="tags"><span class="tag">iPad</span><span class="tag">Game</span></div>
-            <h3>Gravball HD</h3>
-            <p>A physics-driven iPad game with atmospheric visuals and progressive difficulty across timed levels.</p>
-            <ul><li>Responsive touch controls and smooth 60fps physics</li><li>Level system with escalating difficulty, HUD and score tracking</li><li>Logo, menus and in-game art designed in-house</li></ul>
-            <div class="result"><b>60fps</b><span>native physics on iPad</span></div>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section id="services" style="padding-top:24px">
+  <section id="services">
     <div class="wrap">
       <div class="sec-head">
         <div class="eyebrow">What we build</div>
@@ -540,30 +496,6 @@ footer nav a:hover{color:var(--accent)}
     </div>
   </section>
 
-  <section id="scope" class="scoper-sec">
-    <div class="wrap">
-      <div class="sec-head">
-        <div class="eyebrow">AI project scoper</div>
-        <h2>Describe your app. See what it takes.</h2>
-        <p class="lede">Get a feature list, the AI features worth adding, a timeline and a ballpark range. Then talk it through with an engineer, not a salesperson.</p>
-      </div>
-      <div class="scoper">
-        <div class="panel">
-          <label for="idea">Your app idea</label>
-          <textarea id="idea">A meal-planning app for busy parents that scans the fridge with the camera, suggests recipes, and builds a weekly grocery list. Subscription.</textarea>
-          <div class="chips" role="group" aria-label="Example ideas">
-            <button class="chip" type="button" data-idea="A fitness app with an AI coach that adjusts workouts from Apple Health data, with in-app purchases.">AI fitness coach</button>
-            <button class="chip" type="button" data-idea="A booking app for a chain of 12 salons with staff calendars, payments and push reminders.">Salon booking</button>
-            <button class="chip" type="button" data-idea="A 3D puzzle game for iPad with daily challenges, leaderboards and ads.">iPad puzzle game</button>
-            <button class="chip" type="button" data-idea="An internal field-inspection app for technicians that works offline, takes photos, and uses AI to write the report.">Field inspections</button>
-          </div>
-          <button class="btn" id="go" type="button">Scope my app</button>
-        </div>
-        <div class="panel" id="est" aria-live="polite"></div>
-      </div>
-    </div>
-  </section>
-
   <section id="process">
     <div class="wrap">
       <div class="sec-head">
@@ -577,6 +509,58 @@ footer nav a:hover{color:var(--accent)}
         <li><h3>Launch</h3><p>Store listings, review submission and release. We know what gets approved.</p><span class="wk">Launch week</span></li>
         <li><h3>Grow</h3><p>OS updates, new features, analytics and AI improvements after launch.</p><span class="wk">Ongoing</span></li>
       </ol>
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">Selected work</div>
+        <h2>Shipped, used, and still running.</h2>
+        <p class="lede">From a federal travel app to an AI wellness companion, we build the whole thing: apps, backend, admin tools and store launch.</p>
+      </div>
+      <div class="cases">
+        <article class="case">
+          <div class="shot"><img src="assets/mytsa-1.png?v=6" alt="MyTSA Can I Bring search"><img src="assets/mytsa-2.png?v=6" alt="MyTSA checkpoint wait times"></div>
+          <div class="body">
+            <div class="tags"><span class="tag">iOS</span><span class="tag">Travel</span><span class="tag">Government</span></div>
+            <h3>MyTSA</h3>
+            <p>The official Transportation Security Administration app: 24/7 answers to the questions travelers ask TSA most.</p>
+            <ul><li>"Can I Bring?" search for carry-on and checked bags</li><li>Crowd-sourced and historical checkpoint wait times by airport, terminal, day and hour</li><li>FAA delay and weather status for favorite airports</li></ul>
+            <div class="result"><b>Millions</b><span>of downloads on the App Store</span></div>
+          </div>
+        </article>
+        <article class="case">
+          <div class="shot"><img src="assets/wellness-3.png?v=6" alt="Launch to Wellness treatment programs screen"><img src="assets/wellness-2.png?v=6" alt="Launch to Wellness team screen"></div>
+          <div class="body">
+            <div class="tags"><span class="tag">iOS &amp; Android</span><span class="tag">AI</span><span class="tag">Health</span></div>
+            <h3>Launch to Wellness</h3>
+            <p>A mental-health support app connecting clients with therapeutic resources and with each other.</p>
+            <ul><li>AI chatbot that works as an on-demand conversational mindfulness guide</li><li>Community forum so clients can support one another</li><li>Firebase backend for auth, storage and real-time updates</li></ul>
+            <div class="result"><b>AI guide</b><span>available to clients around the clock</span></div>
+          </div>
+        </article>
+        <article class="case">
+          <div class="shot"><img src="assets/rfx-1.png?v=6" alt="RecruitFluency athlete list"><img src="assets/rfx-2.png?v=6" alt="RecruitFluency athlete profile"></div>
+          <div class="body">
+            <div class="tags"><span class="tag">iOS &amp; Android</span><span class="tag">Web</span><span class="tag">Sports</span></div>
+            <h3>RFX · RecruitFluency</h3>
+            <p>A soccer recruiting platform connecting high-school athletes with college coaches, built and owned end to end.</p>
+            <ul><li>Native SwiftUI and Jetpack Compose apps, Flutter admin portal, React club dashboard</li><li>NestJS + PostgreSQL backend on DigitalOcean and Vercel</li><li>Outreach engine emailing thousands of coaches with NCAA contact-window rules</li><li>Tiered subscriptions through RevenueCat</li></ul>
+            <div class="result"><b>Thousands</b><span>of college coaches reached automatically</span></div>
+          </div>
+        </article>
+        <article class="case">
+          <div class="shot wide"><img src="assets/gravball-1.png?v=6" alt="Gravball HD title screen on iPad"></div>
+          <div class="body">
+            <div class="tags"><span class="tag">iPad</span><span class="tag">Game</span></div>
+            <h3>Gravball HD</h3>
+            <p>A physics-driven iPad game with atmospheric visuals and progressive difficulty across timed levels.</p>
+            <ul><li>Responsive touch controls and smooth 60fps physics</li><li>Level system with escalating difficulty, HUD and score tracking</li><li>Logo, menus and in-game art designed in-house</li></ul>
+            <div class="result"><b>60fps</b><span>native physics on iPad</span></div>
+          </div>
+        </article>
+      </div>
     </div>
   </section>
 
@@ -601,8 +585,8 @@ footer nav a:hover{color:var(--accent)}
           <div><label for="cPhone">Phone <span class="opt">(optional)</span></label><input id="cPhone" type="tel" autocomplete="tel"></div>
         </div>
         <div class="row">
-          <div><label for="cBudget">Budget</label><select id="cBudget"><option>Not sure yet</option><option>Under $25k</option><option>$25k–$75k</option><option>$75k–$150k</option><option>$150k+</option></select></div>
-          <div><label for="cWhen">Timeline</label><select id="cWhen"><option>Flexible</option><option>Within 3 months</option><option>3–6 months</option><option>6+ months</option></select></div>
+          <div><label for="cBudget">Budget</label><select id="cBudget" data-icon="budget"><option data-desc="We'll help you figure it out">Not sure yet</option><option data-desc="Prototype or focused MVP">Under $25k</option><option data-desc="Full MVP on one or both platforms">$25k–$75k</option><option data-desc="Feature-rich app with backend">$75k–$150k</option><option data-desc="Large platform or ongoing team">$150k+</option></select></div>
+          <div><label for="cWhen">Timeline</label><select id="cWhen" data-icon="time"><option data-desc="No fixed launch date">Flexible</option><option data-desc="Ready to start now">Within 3 months</option><option data-desc="Planning ahead">3–6 months</option><option data-desc="Early exploration">6+ months</option></select></div>
         </div>
         <div class="field"><label for="cMsg">What are you building?</label><textarea id="cMsg" required placeholder="The problem, who it's for, and any must-have features."></textarea></div>
         <button class="btn" type="submit">Send inquiry</button>
@@ -626,63 +610,97 @@ footer nav a:hover{color:var(--accent)}
 
 <script>
 (function(){
-  const idea=document.getElementById('idea'), est=document.getElementById('est');
-  const has=(t,ws)=>ws.some(w=>t.includes(w));
-  function scope(raw){
-    const t=raw.toLowerCase();
-    const f=["Sign in with Apple / Google / email","Onboarding and profiles","Push notifications","Analytics and crash reporting"];
-    const ai=[]; let pts=4;
-    if(has(t,["game","puzzle","3d","level"])){f.push("Game loop, levels and scoring","Leaderboards (Game Center / Play Games)");pts+=5;}
-    if(has(t,["subscription","in-app","purchase","pay"])){f.push("Subscriptions and payments");pts+=2;}
-    if(has(t,["book","calendar","schedul","appointment","salon"])){f.push("Booking and staff calendars","Admin dashboard");pts+=4;}
-    if(has(t,["camera","scan","photo","vision"])){ai.push("Vision: recognize items in camera photos");pts+=3;}
-    if(has(t,["ai","coach","chat","assistant"])){ai.push("Conversational AI assistant");pts+=3;}
-    if(has(t,["report","write","summar","inspection"])){ai.push("AI-written reports and summaries");pts+=2;}
-    if(has(t,["recipe","suggest","recommend","plan","workout"])){ai.push("Personalized recommendations");pts+=2;}
-    if(has(t,["offline","field"])){f.push("Offline mode and background sync");pts+=3;}
-    if(has(t,["health","fitness","workout"])){f.push("Apple Health / Health Connect");pts+=2;}
-    if(has(t,["leaderboard","community","forum","social"])){f.push("Community features");pts+=2;}
-    if(has(t,["ads"])){f.push("Ad integration");pts+=1;}
-    if(has(t,["grocery","list"])){f.push("Shared lists");pts+=1;}
-    if(!ai.length) ai.push("On-device smart suggestions (private, no server cost)");
-    f.push("Backend, database and API","App Store and Google Play launch");
-    const plat=has(t,["ipad"])?["iPad"]:["iPhone","Android"];
-    if(has(t,["internal","technician"])) plat.push("In-house distribution");
-    return {f,ai,plat,lo:Math.round(pts*5.5),hi:Math.round(pts*9),wk:[Math.max(8,pts+4),pts+10]};
-  }
-  function render(){
-    const r=scope(idea.value||"");
-    est.style.opacity=.35;
-    setTimeout(()=>{
-      est.innerHTML=`
-        <div class="est">
-          <div><div class="k">Ballpark</div><div class="v">$${r.lo}k–$${r.hi}k</div></div>
-          <div><div class="k">Timeline</div><div class="v">${r.wk[0]}–${r.wk[1]} wks</div></div>
-          <div class="full"><div class="k">Platforms</div>${r.plat.map(p=>`<span class="pill">${p}</span>`).join("")}</div>
-          <div><div class="k">Core features</div><ul>${r.f.map(x=>`<li>${x}</li>`).join("")}</ul></div>
-          <div><div class="k">AI worth adding</div><ul>${r.ai.map(x=>`<li>${x}</li>`).join("")}</ul></div>
-          <form class="gate" id="gate"><label for="gEmail" style="position:absolute;left:-9999px">Email</label><input id="gEmail" type="email" placeholder="you@company.com" autocomplete="email"><button class="btn" type="submit">Email me the full scope</button></form>
-          <p class="fine full" id="gateMsg">A starting point, not a quote. We confirm scope and price on a free call.</p>
-        </div>`;
-      est.style.opacity=1;
-      document.getElementById('gate').addEventListener('submit',e=>{e.preventDefault();document.getElementById('gateMsg').textContent="Design preview: email delivery isn't connected yet.";});
-    },180);
-  }
-  document.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{idea.value=c.dataset.idea;render();}));
-  document.getElementById('go').addEventListener('click',render);
   document.getElementById('heroScope').addEventListener('submit',e=>{
     e.preventDefault();
-    const v=document.getElementById('heroIdea').value.trim();
-    if(v) idea.value=v;
-    render();
-    document.getElementById('scope').scrollIntoView();
+    const v=document.getElementById('heroIdea').value.trim(), msg=document.getElementById('cMsg');
+    if(v && !msg.value.trim()) msg.value=v;
+    const contact=document.getElementById('contact');
+    document.getElementById(v?'cName':'cMsg').focus({preventScroll:true});
+    contact.scrollIntoView({behavior:'smooth'});
+    setTimeout(()=>{ if(Math.abs(contact.getBoundingClientRect().top)>innerHeight*0.5) contact.scrollIntoView({behavior:'auto'}); },900);
   });
   document.getElementById('contactForm').addEventListener('submit',e=>{
     e.preventDefault();
     const s=document.getElementById('sent'); s.hidden=false;
     s.textContent="Design preview: this form isn't connected yet. On the live site it would send your inquiry to support@moblicode.com.";
   });
-  render();
+
+
+  // Polished dropdowns: a styled button + listbox that drives the native <select>
+  (function(){
+    const icons={
+      budget:'<svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="3"/><path d="M3 10h18"/><path d="M16 14.5h2"/></svg>',
+      time:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>'
+    };
+    const chev='<svg class="dd-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>';
+    const tick='<svg class="dd-tick" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+    const all=[];
+    document.querySelectorAll('#contactForm select').forEach(sel=>{
+      const label=document.querySelector('label[for="'+sel.id+'"]');
+      if(label && !label.id) label.id=sel.id+'-label';
+      const wrap=document.createElement('div'); wrap.className='dd';
+      sel.parentNode.insertBefore(wrap,sel); wrap.appendChild(sel);
+      sel.classList.add('dd-native'); sel.tabIndex=-1; sel.setAttribute('aria-hidden','true');
+      const btn=document.createElement('button'); btn.type='button'; btn.className='dd-btn'; btn.id=sel.id+'-btn';
+      btn.setAttribute('aria-haspopup','listbox'); btn.setAttribute('aria-expanded','false');
+      if(label){ btn.setAttribute('aria-labelledby',label.id+' '+btn.id); label.htmlFor=btn.id; }
+      const list=document.createElement('ul'); list.className='dd-list'; list.setAttribute('role','listbox'); list.id=sel.id+'-list'; list.tabIndex=-1;
+      if(label) list.setAttribute('aria-labelledby',label.id);
+      btn.setAttribute('aria-controls',list.id);
+      const opts=[...sel.options].map((o,i)=>{
+        const li=document.createElement('li'); li.className='dd-opt'; li.id=sel.id+'-opt'+i; li.setAttribute('role','option');
+        li.innerHTML='<span><b></b>'+(o.dataset.desc?'<small></small>':'')+'</span>'+tick;
+        li.querySelector('b').textContent=o.text; if(o.dataset.desc) li.querySelector('small').textContent=o.dataset.desc;
+        li.addEventListener('mousemove',()=>setActive(i));
+        li.addEventListener('click',()=>{ choose(i); close(true); });
+        list.appendChild(li); return li;
+      });
+      wrap.insertBefore(btn,sel); wrap.appendChild(list);
+      let active=sel.selectedIndex;
+      function render(){
+        const o=sel.options[sel.selectedIndex];
+        btn.innerHTML='<span class="dd-ico" aria-hidden="true">'+(icons[sel.dataset.icon]||'')+'</span><span class="dd-val"><b></b><small></small></span>'+chev;
+        btn.querySelector('b').textContent=o.text; btn.querySelector('small').textContent=o.dataset.desc||'';
+        opts.forEach((li,i)=>li.setAttribute('aria-selected',String(i===sel.selectedIndex)));
+      }
+      function setActive(i){
+        active=Math.max(0,Math.min(opts.length-1,i));
+        opts.forEach((li,j)=>li.classList.toggle('active',j===active));
+        list.setAttribute('aria-activedescendant',opts[active].id);
+        opts[active].scrollIntoView({block:'nearest'});
+      }
+      function choose(i){ sel.selectedIndex=i; sel.dispatchEvent(new Event('change',{bubbles:true})); render(); }
+      function open(){
+        all.forEach(d=>d!==api&&d.close(false));
+        const r=wrap.getBoundingClientRect();
+        wrap.classList.toggle('up', innerHeight-r.bottom<330 && r.top>innerHeight-r.bottom);
+        wrap.classList.add('open'); btn.setAttribute('aria-expanded','true');
+        setActive(sel.selectedIndex); list.focus({preventScroll:true});
+      }
+      function close(focusBtn){
+        if(!wrap.classList.contains('open')) return;
+        wrap.classList.remove('open'); btn.setAttribute('aria-expanded','false');
+        opts.forEach(li=>li.classList.remove('active'));
+        if(focusBtn) btn.focus({preventScroll:true});
+      }
+      const api={close};
+      all.push(api);
+      btn.addEventListener('click',()=>wrap.classList.contains('open')?close(true):open());
+      btn.addEventListener('keydown',e=>{ if(['ArrowDown','ArrowUp','Enter',' '].includes(e.key)){ e.preventDefault(); open(); } });
+      list.addEventListener('keydown',e=>{
+        if(e.key==='ArrowDown'){e.preventDefault();setActive(active+1);}
+        else if(e.key==='ArrowUp'){e.preventDefault();setActive(active-1);}
+        else if(e.key==='Home'){e.preventDefault();setActive(0);}
+        else if(e.key==='End'){e.preventDefault();setActive(opts.length-1);}
+        else if(e.key==='Enter'||e.key===' '){e.preventDefault();choose(active);close(true);}
+        else if(e.key==='Escape'){e.preventDefault();close(true);}
+        else if(e.key==='Tab'){close(false);}
+      });
+      document.addEventListener('pointerdown',e=>{ if(!wrap.contains(e.target)) close(false); });
+      sel.form && sel.form.addEventListener('reset',()=>setTimeout(render));
+      render();
+    });
+  })();
 
   // Hero circuit lines: a glowing pulse runs along each trace into its end dot.
   // Every other trace runs in reverse so pulses move left-to-right and right-to-left.
@@ -703,7 +721,7 @@ footer nav a:hover{color:var(--accent)}
 
   // Fade sections in as they scroll into view
   if('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches){
-    const groups=['.proof .wrap > div','.sec-head','.case','.svc article','.be-copy > *','.be-visual','.scoper > .panel','.steps li','.direct','#contactForm','footer .wrap > *'];
+    const groups=['.proof .wrap > div','.sec-head','.case','.svc article','.be-copy > *','.be-visual','.steps li','.direct','#contactForm','footer .wrap > *'];
     groups.forEach(sel=>{
       let i=0, parent=null;
       document.querySelectorAll(sel).forEach(el=>{
