@@ -237,6 +237,13 @@ form .row>*{min-width:0;display:flex;flex-direction:column;gap:6px}
 form .field{display:flex;flex-direction:column;gap:6px}
 .opt{font-weight:400;color:var(--muted)}
 .sent{background:var(--accent-soft);color:var(--ink);border-radius:12px;padding:14px 16px;font-size:.92rem}
+.sent b{display:block;font-family:var(--display);font-size:1.05rem;margin-bottom:2px}
+.hp{position:absolute!important;left:-9999px;width:1px;height:1px;opacity:0}
+.form-error{margin:0;color:#c2442f;font-size:.88rem}
+:root[data-theme="dark"] .form-error{color:#ef8a76}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .form-error{color:#ef8a76}}
+input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:#c2442f}
+#sendBtn[disabled]{opacity:.7;cursor:progress;transform:none;box-shadow:none}
 @media (max-width:860px){.contact{grid-template-columns:1fr}}
 @media (max-width:520px){form .row{grid-template-columns:1fr}}
 
@@ -617,16 +624,18 @@ footer nav a:hover{color:var(--accent)}
       </div>
       <form class="panel" id="contactForm" novalidate>
         <div class="row">
-          <div><label for="cName">Name</label><input id="cName" required autocomplete="name"></div>
-          <div><label for="cEmail">Email</label><input id="cEmail" type="email" required autocomplete="email"></div>
+          <div><label for="cName">Name</label><input id="cName" name="name" required autocomplete="name" maxlength="120"></div>
+          <div><label for="cEmail">Email</label><input id="cEmail" name="email" type="email" required autocomplete="email" maxlength="200"></div>
         </div>
         <div class="row">
-          <div><label for="cCompany">Company <span class="opt">(optional)</span></label><input id="cCompany" autocomplete="organization"></div>
-          <div><label for="cPhone">Phone <span class="opt">(optional)</span></label><input id="cPhone" type="tel" autocomplete="tel"></div>
+          <div><label for="cCompany">Company <span class="opt">(optional)</span></label><input id="cCompany" name="company" autocomplete="organization" maxlength="160"></div>
+          <div><label for="cPhone">Phone <span class="opt">(optional)</span></label><input id="cPhone" name="phone" type="tel" autocomplete="tel" maxlength="40"></div>
         </div>
-        <div class="field"><label for="cMsg">What are you building?</label><textarea id="cMsg" required placeholder="The problem, who it's for, and any must-have features."></textarea></div>
-        <button class="btn" type="submit">Send inquiry</button>
-        <div id="sent" class="sent" hidden></div>
+        <div class="field"><label for="cMsg">What are you building?</label><textarea id="cMsg" name="message" required maxlength="5000" placeholder="The problem, who it's for, and any must-have features."></textarea></div>
+        <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <p id="formError" class="form-error" role="alert" hidden></p>
+        <button class="btn" type="submit" id="sendBtn">Send inquiry</button>
+        <div id="sent" class="sent" role="status" hidden></div>
       </form>
     </div>
   </section>
@@ -646,11 +655,50 @@ footer nav a:hover{color:var(--accent)}
 
 <script>
 (function(){
-  document.getElementById('contactForm').addEventListener('submit',e=>{
-    e.preventDefault();
-    const s=document.getElementById('sent'); s.hidden=false;
-    s.textContent="Design preview: this form isn't connected yet. On the live site it would send your inquiry to support@moblicode.com.";
-  });
+  // Contact form: delivered by email to support@moblicode.com through FormSubmit
+  (function(){
+    const form=document.getElementById('contactForm'), btn=document.getElementById('sendBtn');
+    const err=document.getElementById('formError'), sent=document.getElementById('sent');
+    const ENDPOINT='https://formsubmit.co/ajax/support@moblicode.com';
+    const val=id=>document.getElementById(id).value.trim();
+    function fail(msg, field){
+      err.textContent=msg; err.hidden=false;
+      if(field){ field.setAttribute('aria-invalid','true'); field.focus(); }
+    }
+    form.addEventListener('input',e=>{ e.target.removeAttribute('aria-invalid'); err.hidden=true; });
+    form.addEventListener('submit',async e=>{
+      e.preventDefault();
+      err.hidden=true; sent.hidden=true;
+      form.querySelectorAll('[aria-invalid]').forEach(el=>el.removeAttribute('aria-invalid'));
+      if(!val('cName')) return fail('Please enter your name.', document.getElementById('cName'));
+      if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val('cEmail'))) return fail('Please enter a valid email address so we can reply.', document.getElementById('cEmail'));
+      if(val('cMsg').length<10) return fail('Please tell us a little about what you want to build.', document.getElementById('cMsg'));
+      if(form.elements._honey.value) return; // spam bots fill the hidden field
+      btn.disabled=true; const label=btn.textContent; btn.textContent='Sending…';
+      try{
+        const res=await fetch(ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({
+          _subject:'New project inquiry from '+val('cName'),
+          _replyto:val('cEmail'),
+          _template:'table',
+          _captcha:'false',
+          Name:val('cName'), Email:val('cEmail'),
+          Company:val('cCompany')||'—', Phone:val('cPhone')||'—',
+          Project:val('cMsg')
+        })});
+        const data=await res.json().catch(()=>({}));
+        if(!res.ok || String(data.success)!=='true') throw new Error(data.message||('HTTP '+res.status));
+        const replyTo=val('cEmail');
+        form.reset();
+        sent.innerHTML='<b>Thanks! Your message is on its way.</b>We’ll reply to <span></span> soon.';
+        sent.querySelector('span').textContent=replyTo;
+        sent.hidden=false;
+      }catch(ex){
+        fail('We couldn\u2019t send your message just now. Please email support@moblicode.com or call 747 755 1281.');
+      }finally{
+        btn.disabled=false; btn.textContent=label;
+      }
+    });
+  })();
 
 
 
