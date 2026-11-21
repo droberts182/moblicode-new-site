@@ -87,10 +87,7 @@ section{padding-block:96px;scroll-margin-top:96px}
 .hero .wrap{position:relative;z-index:1;display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
 .hero .wrap>*{min-width:0}
 .hero-copy{display:flex;flex-direction:column;gap:22px}
-.scope-bar{display:flex;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:8px;box-shadow:0 20px 50px -30px rgba(40,20,110,.35);max-width:560px}
-.scope-bar input{flex:1;min-width:0;border:0;background:transparent;font:inherit;color:var(--ink);padding:8px 10px}
-.scope-bar input:focus{outline:none}
-.scope-bar:focus-within{border-color:var(--accent)}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap}
 .hint{font-size:.85rem;color:var(--muted)}
 .hint a{color:var(--accent);font-weight:600;text-decoration:none}
 .stage{position:relative;height:540px}
@@ -351,12 +348,11 @@ footer nav a:hover{color:var(--accent)}
         <div class="eyebrow">US-based · Native iOS &amp; Android · 19+ years</div>
         <h1>Native apps your users <span class="grad">keep coming back to.</span></h1>
         <p class="lede">We develop custom iOS and Android apps and games for phones and tablets, plus internal web and mobile solutions that run your business. From first idea to launch.</p>
-        <form class="scope-bar" id="heroScope">
-          <label for="heroIdea" class="sr" style="position:absolute;left:-9999px">Your app or game idea</label>
-          <input id="heroIdea" placeholder="Tell us about your app or game idea…" autocomplete="off">
-          <button class="btn" type="submit">Get started</button>
-        </form>
-        <p class="hint">Free consultation and a personalized quote. Or <a href="#contact">book a 20-minute call</a>.</p>
+        <div class="hero-ctas">
+          <a class="btn" href="#contact">Start a project</a>
+          <a class="btn line" href="#work">See our work</a>
+        </div>
+        <p class="hint">Free consultation and a personalized quote.</p>
       </div>
       <div class="stage" aria-label="Screens from apps Moblicode built">
         <img class="s1" src="assets/wellness-3.png?v=6" alt="Launch to Wellness treatment programs screen on iPhone">
@@ -650,15 +646,6 @@ footer nav a:hover{color:var(--accent)}
 
 <script>
 (function(){
-  document.getElementById('heroScope').addEventListener('submit',e=>{
-    e.preventDefault();
-    const v=document.getElementById('heroIdea').value.trim(), msg=document.getElementById('cMsg');
-    if(v && !msg.value.trim()) msg.value=v;
-    const contact=document.getElementById('contact');
-    document.getElementById(v?'cName':'cMsg').focus({preventScroll:true});
-    contact.scrollIntoView({behavior:'smooth'});
-    setTimeout(()=>{ if(Math.abs(contact.getBoundingClientRect().top)>innerHeight*0.5) contact.scrollIntoView({behavior:'auto'}); },900);
-  });
   document.getElementById('contactForm').addEventListener('submit',e=>{
     e.preventDefault();
     const s=document.getElementById('sent'); s.hidden=false;
