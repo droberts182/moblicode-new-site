@@ -245,12 +245,6 @@ form .field{display:flex;flex-direction:column;gap:6px}
 .be-arrowhead{fill:var(--g4)}
 .be-req{fill:var(--accent)}
 .be-res{fill:var(--g4)}
-.be-term{background:#11121f;color:#d9dcf0;border-radius:14px;overflow:hidden;font-family:var(--mono);font-size:.78rem}
-.be-term-bar{display:flex;align-items:center;gap:6px;padding:9px 12px;background:#1b1c2e;color:#9ea2c4;white-space:nowrap;overflow:hidden}
-.be-term-bar i{width:9px;height:9px;border-radius:50%;background:#3a3c58;flex:none}
-.be-term-bar span{margin-left:8px;overflow:hidden;text-overflow:ellipsis}
-.be-term pre{margin:0;padding:12px 14px;overflow-x:auto;line-height:1.55}
-.be-term .ok{color:#5fd39a}.be-term .dim{color:#7c80a3}.be-term .jk{color:#b9a6ff}.be-term .js{color:#ffb98a}.be-term .jn{color:#6fd6e6}
 .be-legend{display:flex;gap:18px;flex-wrap:wrap;font-size:.8rem;color:var(--muted)}
 .be-legend span{display:flex;align-items:center;gap:6px}
 .be-legend i{width:9px;height:9px;border-radius:50%;display:inline-block}
@@ -543,17 +537,6 @@ footer nav a:hover{color:var(--accent)}
             </g>
           </svg>
 
-          <div class="be-term" aria-label="Example API request and response">
-            <div class="be-term-bar"><i></i><i></i><i></i><span>GET /v1/athletes?position=ST&amp;grad=2027</span></div>
-<pre><span class="ok">200 OK</span> <span class="dim">· 38 ms · cached</span>
-{
-  <span class="jk">"count"</span>: <span class="jn">132</span>,
-  <span class="jk">"athletes"</span>: [
-    { <span class="jk">"id"</span>: <span class="jn">4812</span>, <span class="jk">"name"</span>: <span class="js">"A. Rivera"</span>, <span class="jk">"position"</span>: <span class="js">"ST"</span> },
-    <span class="dim">…</span>
-  ]
-}</pre>
-          </div>
           <figcaption class="be-legend"><span><i class="be-req-dot"></i>Request</span><span><i class="be-res-dot"></i>Response</span><span><i class="be-fk-dot"></i>Relation</span></figcaption>
         </figure>
       </div>
