@@ -136,7 +136,7 @@
   scene.add(group);
 
   const layout = [
-    { src: 'assets/screen-wellness.png', aspect: 454 / 1018, finish: 'natural', pos: [-0.76, -0.06, -0.45], ry: 0.42, phase: 0.0 },
+    { src: 'assets/screen-wellness-info.png', aspect: 520 / 1128, finish: 'natural', pos: [-0.76, -0.06, -0.45], ry: 0.42, phase: 0.0 },
     { src: 'assets/screen-rfx.png',      aspect: 404 / 905,  finish: 'black',   pos: [0.76, -0.12, -0.55],  ry: -0.42, phase: 2.1 },
     { src: 'assets/screen-mytsa.png',    aspect: 554 / 1186, finish: 'blue',    pos: [0, 0.04, 0.25],       ry: 0.0,  phase: 4.2 },
   ];
