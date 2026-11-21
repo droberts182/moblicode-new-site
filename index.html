@@ -53,14 +53,15 @@ section{padding-block:96px}
 
 /* nav */
 .nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;height:88px}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;height:104px}
 .brand{display:flex;align-items:center;text-decoration:none;background:var(--logo-plate);border-radius:12px;padding:2px 6px}
-.brand img{height:80px;width:auto;display:block}
+.brand img{height:88px;width:auto;display:block}
 .nav ul{display:flex;gap:28px;list-style:none;margin:0;padding:0;font-size:.93rem;font-weight:500}
 .nav ul a{text-decoration:none;color:var(--muted)}
 .nav ul a:hover{color:var(--ink)}
 .nav .btn{padding:10px 16px;font-size:.88rem}
 @media (max-width:860px){.nav ul{display:none}}
+@media (max-width:520px){.nav .wrap{height:84px}.brand img{height:70px}}
 
 /* hero */
 .hero{position:relative;padding-block:72px 40px;overflow:hidden}
@@ -200,7 +201,7 @@ form .field{display:flex;flex-direction:column;gap:6px}
 /* footer */
 footer{border-top:1px solid var(--line);padding-block:48px}
 footer .wrap{display:flex;justify-content:space-between;gap:32px;flex-wrap:wrap;align-items:flex-start}
-footer .brand img{height:96px}
+footer .brand img{height:110px}
 footer nav{display:flex;gap:48px;flex-wrap:wrap;font-size:.92rem}
 footer nav div{display:flex;flex-direction:column;gap:8px}
 footer nav b{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:500}
@@ -211,7 +212,7 @@ footer nav a:hover{color:var(--accent)}
 
 <header class="nav">
   <div class="wrap">
-    <a class="brand" href="#top" aria-label="Moblicode home"><img src="assets/logo.webp?v=6" alt="Moblicode — Mobile App Development" width="62" height="62"></a>
+    <a class="brand" href="#top" aria-label="Moblicode home"><img src="assets/logo-trim.png?v=7" alt="Moblicode — Mobile App Development" width="98" height="88"></a>
     <ul>
       <li><a href="#work">Work</a></li>
       <li><a href="#services">Services</a></li>
@@ -409,7 +410,7 @@ footer nav a:hover{color:var(--accent)}
 
 <footer>
   <div class="wrap">
-    <a class="brand" href="#top" aria-label="Moblicode home"><img src="assets/logo.webp?v=6" alt="Moblicode — Mobile App Development" width="96" height="96"></a>
+    <a class="brand" href="#top" aria-label="Moblicode home"><img src="assets/logo-trim.png?v=7" alt="Moblicode — Mobile App Development" width="122" height="110"></a>
     <nav aria-label="Footer">
       <div><b>Company</b><a href="#work">Work</a><a href="#services">Services</a><a href="#process">Process</a></div>
       <div><b>Services</b><a href="#services">iOS</a><a href="#services">Android</a><a href="#services">AI features</a></div>
