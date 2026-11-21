@@ -48,7 +48,7 @@ p{margin:0;max-width:62ch}
 .btn.line{background:transparent;color:var(--ink);border:1px solid var(--line)}
 .btn.line:hover{border-color:var(--accent);box-shadow:none}
 :focus-visible{outline:2px solid var(--g2);outline-offset:3px;border-radius:6px}
-section{padding-block:96px}
+section{padding-block:96px;scroll-margin-top:96px}
 .sec-head{display:flex;flex-direction:column;gap:14px;margin-bottom:48px}
 
 /* nav */
@@ -68,6 +68,22 @@ section{padding-block:96px}
 .traces{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
 .traces path{stroke:var(--trace);stroke-width:1.5;fill:none}
 .traces circle{fill:var(--bg);stroke:var(--trace);stroke-width:1.5}
+.traces .spark{stroke:var(--accent);stroke-width:3;stroke-linecap:round;opacity:0;filter:drop-shadow(0 0 3px var(--accent)) drop-shadow(0 0 8px var(--accent)) drop-shadow(0 0 16px var(--g2))}
+@media (prefers-reduced-motion:no-preference){
+  .traces .spark{animation:spark 4.2s cubic-bezier(.45,0,.25,1) infinite;animation-delay:var(--delay,0s)}
+  .traces circle.lit{animation:node 4.2s ease-out infinite;animation-delay:var(--delay,0s)}
+  @keyframes spark{
+    0%{stroke-dashoffset:var(--start);opacity:0}
+    6%{opacity:1}
+    52%{opacity:1}
+    58%,100%{stroke-dashoffset:var(--end);opacity:0}
+  }
+  @keyframes node{
+    0%,50%{stroke:var(--trace);fill:var(--bg);r:5px}
+    56%{stroke:var(--accent);fill:var(--accent-soft);r:7px;filter:drop-shadow(0 0 6px var(--accent))}
+    80%,100%{stroke:var(--trace);fill:var(--bg);r:5px}
+  }
+}
 .hero .wrap{position:relative;z-index:1;display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
 .hero .wrap>*{min-width:0}
 .hero-copy{display:flex;flex-direction:column;gap:22px}
@@ -192,6 +208,57 @@ form .field{display:flex;flex-direction:column;gap:6px}
 @media (max-width:860px){.contact{grid-template-columns:1fr}}
 @media (max-width:520px){form .row{grid-template-columns:1fr}}
 
+/* backend & APIs */
+.backend{background:var(--bg)}
+.be-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:center}
+.be-grid>*{min-width:0}
+.be-copy{display:flex;flex-direction:column;gap:28px}
+.be-caps{display:grid;grid-template-columns:1fr 1fr;gap:20px 28px}
+.be-caps>div{display:flex;flex-direction:column;gap:4px;padding-left:14px;border-left:2px solid var(--accent-soft)}
+.be-caps h3{font-size:1rem}
+.be-caps p{font-size:.9rem;color:var(--muted)}
+.be-proof{font-size:.92rem;color:var(--muted);background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.be-proof b{color:var(--ink)}
+.be-visual{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:22px;display:flex;flex-direction:column;gap:16px;box-shadow:0 30px 60px -40px rgba(40,20,110,.35)}
+.be-visual svg{width:100%;height:auto;display:block;font-family:var(--body)}
+.be-col{font-family:var(--mono);font-size:11px;letter-spacing:.14em;fill:var(--muted);text-anchor:middle}
+.be-node rect:first-child{fill:var(--bg);stroke:var(--line);stroke-width:1.5}
+.be-ico{fill:none;stroke:var(--accent);stroke-width:1.6}
+.be-ico-fill{fill:var(--accent)}
+.be-t{font-family:var(--display);font-weight:700;font-size:14px;fill:var(--ink)}
+.be-s{font-size:11.5px;fill:var(--muted)}
+.be-api-box{fill:var(--accent-soft);stroke:var(--accent);stroke-width:1.5}
+.be-m{font-family:var(--mono);font-size:9.5px;font-weight:500;text-anchor:middle;fill:#fff}
+.be-path{font-family:var(--mono);font-size:11.5px;fill:var(--ink)}
+.m-get{fill:#1d9a6c}.m-post{fill:#5b34c9}.m-put{fill:#d1782a}.m-ws{fill:#1aa3b8}
+.be-rule{stroke:var(--line);stroke-width:1}
+.be-chip{fill:var(--surface);stroke:var(--line)}
+.be-chip-t{font-size:10.5px;font-weight:600;fill:var(--muted);text-anchor:middle}
+.be-tbox{fill:var(--bg);stroke:var(--line);stroke-width:1.5}
+.be-thead{fill:var(--ink)}
+.be-tname{font-family:var(--mono);font-size:12px;font-weight:500;fill:var(--bg)}
+.be-col-n{font-family:var(--mono);font-size:11.5px;fill:var(--ink)}
+.be-key{font-family:var(--mono);font-size:9.5px;font-weight:500;fill:var(--g3);text-anchor:end}
+.be-key.fk{fill:var(--g4)}
+.be-wire{fill:none;stroke:var(--trace);stroke-width:2}
+.be-fk{fill:none;stroke:var(--g4);stroke-width:1.5;stroke-dasharray:4 4}
+.be-arrowhead{fill:var(--g4)}
+.be-req{fill:var(--accent)}
+.be-res{fill:var(--g4)}
+.be-term{background:#11121f;color:#d9dcf0;border-radius:14px;overflow:hidden;font-family:var(--mono);font-size:.78rem}
+.be-term-bar{display:flex;align-items:center;gap:6px;padding:9px 12px;background:#1b1c2e;color:#9ea2c4;white-space:nowrap;overflow:hidden}
+.be-term-bar i{width:9px;height:9px;border-radius:50%;background:#3a3c58;flex:none}
+.be-term-bar span{margin-left:8px;overflow:hidden;text-overflow:ellipsis}
+.be-term pre{margin:0;padding:12px 14px;overflow-x:auto;line-height:1.55}
+.be-term .ok{color:#5fd39a}.be-term .dim{color:#7c80a3}.be-term .jk{color:#b9a6ff}.be-term .js{color:#ffb98a}.be-term .jn{color:#6fd6e6}
+.be-legend{display:flex;gap:18px;flex-wrap:wrap;font-size:.8rem;color:var(--muted)}
+.be-legend span{display:flex;align-items:center;gap:6px}
+.be-legend i{width:9px;height:9px;border-radius:50%;display:inline-block}
+.be-req-dot{background:var(--accent)}.be-res-dot{background:var(--g4)}
+.be-fk-dot{border:1.5px dashed var(--g4);background:transparent}
+@media (max-width:960px){.be-grid{grid-template-columns:1fr;gap:40px}}
+@media (max-width:520px){.be-caps{grid-template-columns:1fr}.be-visual{padding:14px}}
+
 /* scroll reveal: only hides content once the script has confirmed it can reveal it */
 @media (prefers-reduced-motion:no-preference){
   .reveal-on .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0ms)}
@@ -216,6 +283,7 @@ footer nav a:hover{color:var(--accent)}
     <ul>
       <li><a href="#work">Work</a></li>
       <li><a href="#services">Services</a></li>
+      <li><a href="#backend">Backend</a></li>
       <li><a href="#scope">AI scoper</a></li>
       <li><a href="#process">Process</a></li>
       <li><a href="#contact">Contact</a></li>
@@ -336,6 +404,144 @@ footer nav a:hover{color:var(--accent)}
     </div>
   </section>
 
+  <section id="backend" class="backend">
+    <div class="wrap">
+      <div class="be-grid">
+        <div class="be-copy">
+          <div class="sec-head" style="margin-bottom:0">
+            <div class="eyebrow">Backend · Databases · APIs</div>
+            <h2>The engine behind your app.</h2>
+            <p class="lede">Every great app runs on a solid backend. We design the database, build the API, and host it in the cloud, so your iPhone, Android and web apps all share one fast, secure source of truth.</p>
+          </div>
+          <div class="be-caps">
+            <div><h3>Database design</h3><p>Schemas, relations, indexes and safe migrations in PostgreSQL or Firebase.</p></div>
+            <div><h3>REST &amp; GraphQL APIs</h3><p>Versioned, documented endpoints your apps and partners can rely on.</p></div>
+            <div><h3>Auth &amp; security</h3><p>Sign in with Apple and Google, roles, tokens, rate limits and encrypted data.</p></div>
+            <div><h3>Real-time &amp; sync</h3><p>Live updates, push notifications and offline sync that catches up on its own.</p></div>
+            <div><h3>Admin dashboards</h3><p>Web tools for your team to manage users, content and data.</p></div>
+            <div><h3>Cloud &amp; scaling</h3><p>Deployed, monitored and backed up on DigitalOcean, Vercel, Firebase and more.</p></div>
+          </div>
+          <p class="be-proof"><b>In production:</b> the RecruitFluency API (NestJS + PostgreSQL) serves native iOS and Android apps, a Flutter admin portal and a React club dashboard from one backend.</p>
+          <div><a class="btn" href="#contact">Plan your backend</a></div>
+        </div>
+
+        <figure class="be-visual" aria-label="Diagram: iOS, Android and admin apps call an API layer, which reads and writes database tables">
+          <svg viewBox="0 0 660 470" role="img" aria-hidden="true">
+            <defs>
+              <marker id="be-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L8 4L0 8z" class="be-arrowhead"/></marker>
+            </defs>
+
+            <text x="85" y="26" class="be-col">YOUR APPS</text>
+            <text x="315" y="26" class="be-col">API LAYER</text>
+            <text x="545" y="26" class="be-col">DATABASE</text>
+
+            <!-- connectors: apps -> API -->
+            <path id="c1" class="be-wire" d="M150 92 C190 92 195 120 230 120"/>
+            <path id="c2" class="be-wire" d="M150 210 C190 210 195 210 230 210"/>
+            <path id="c3" class="be-wire" d="M150 328 C190 328 195 300 230 300"/>
+            <!-- connectors: API -> tables -->
+            <path id="d1" class="be-wire" d="M400 120 C435 120 440 92 475 92"/>
+            <path id="d2" class="be-wire" d="M400 220 C435 220 440 232 475 232"/>
+            <path id="d3" class="be-wire" d="M400 320 C435 320 440 362 475 362"/>
+
+            <!-- client apps -->
+            <g class="be-node">
+              <rect x="20" y="58" width="130" height="68" rx="14"/>
+              <rect x="36" y="72" width="22" height="40" rx="5" class="be-ico"/><rect x="43" y="75" width="8" height="2.5" rx="1.2" class="be-ico-fill"/>
+              <text x="68" y="88" class="be-t">iOS app</text><text x="68" y="106" class="be-s">SwiftUI</text>
+            </g>
+            <g class="be-node">
+              <rect x="20" y="176" width="130" height="68" rx="14"/>
+              <rect x="36" y="190" width="22" height="40" rx="4" class="be-ico"/><rect x="43" y="225" width="8" height="2.5" rx="1.2" class="be-ico-fill"/>
+              <text x="68" y="206" class="be-t">Android app</text><text x="68" y="224" class="be-s">Compose</text>
+            </g>
+            <g class="be-node">
+              <rect x="20" y="294" width="130" height="68" rx="14"/>
+              <rect x="33" y="314" width="28" height="22" rx="3" class="be-ico"/><path d="M41 342h12" class="be-ico"/>
+              <text x="68" y="324" class="be-t">Admin web</text><text x="68" y="342" class="be-s">React</text>
+            </g>
+
+            <!-- API -->
+            <g class="be-api">
+              <rect x="230" y="48" width="170" height="340" rx="18" class="be-api-box"/>
+              <text x="246" y="76" class="be-t">api.yourapp.com</text>
+              <text x="246" y="93" class="be-s">Node · NestJS</text>
+              <g class="be-ep" transform="translate(246 112)"><rect width="38" height="18" rx="5" class="m-post"/><text x="19" y="12.5" class="be-m">POST</text><text x="46" y="13" class="be-path">/auth/login</text></g>
+              <g class="be-ep" transform="translate(246 140)"><rect width="38" height="18" rx="5" class="m-get"/><text x="19" y="12.5" class="be-m">GET</text><text x="46" y="13" class="be-path">/users/:id</text></g>
+              <g class="be-ep" transform="translate(246 168)"><rect width="38" height="18" rx="5" class="m-get"/><text x="19" y="12.5" class="be-m">GET</text><text x="46" y="13" class="be-path">/athletes</text></g>
+              <g class="be-ep" transform="translate(246 196)"><rect width="38" height="18" rx="5" class="m-put"/><text x="19" y="12.5" class="be-m">PUT</text><text x="46" y="13" class="be-path">/profiles/:id</text></g>
+              <g class="be-ep" transform="translate(246 224)"><rect width="38" height="18" rx="5" class="m-post"/><text x="19" y="12.5" class="be-m">POST</text><text x="46" y="13" class="be-path">/events</text></g>
+              <g class="be-ep" transform="translate(246 252)"><rect width="38" height="18" rx="5" class="m-ws"/><text x="19" y="12.5" class="be-m">WS</text><text x="46" y="13" class="be-path">/realtime</text></g>
+              <line x1="246" y1="288" x2="384" y2="288" class="be-rule"/>
+              <g transform="translate(246 300)"><rect width="66" height="22" rx="11" class="be-chip"/><text x="33" y="15" class="be-chip-t">Auth</text></g>
+              <g transform="translate(318 300)"><rect width="66" height="22" rx="11" class="be-chip"/><text x="33" y="15" class="be-chip-t">Validation</text></g>
+              <g transform="translate(246 330)"><rect width="66" height="22" rx="11" class="be-chip"/><text x="33" y="15" class="be-chip-t">Rate limits</text></g>
+              <g transform="translate(318 330)"><rect width="66" height="22" rx="11" class="be-chip"/><text x="33" y="15" class="be-chip-t">Caching</text></g>
+            </g>
+
+            <!-- database tables -->
+            <g class="be-table" transform="translate(475 44)">
+              <rect width="150" height="96" rx="12" class="be-tbox"/><path d="M0 12a12 12 0 0 1 12-12h126a12 12 0 0 1 12 12v14H0z" class="be-thead"/>
+              <text x="12" y="18" class="be-tname">users</text>
+              <text x="12" y="44" class="be-col-n">id</text><text x="138" y="44" class="be-key">PK</text>
+              <text x="12" y="62" class="be-col-n">email</text>
+              <text x="12" y="80" class="be-col-n">created_at</text>
+            </g>
+            <g class="be-table" transform="translate(475 184)">
+              <rect width="150" height="96" rx="12" class="be-tbox"/><path d="M0 12a12 12 0 0 1 12-12h126a12 12 0 0 1 12 12v14H0z" class="be-thead"/>
+              <text x="12" y="18" class="be-tname">sessions</text>
+              <text x="12" y="44" class="be-col-n">id</text><text x="138" y="44" class="be-key">PK</text>
+              <text x="12" y="62" class="be-col-n">user_id</text><text x="138" y="62" class="be-key fk">FK</text>
+              <text x="12" y="80" class="be-col-n">expires_at</text>
+            </g>
+            <g class="be-table" transform="translate(475 314)">
+              <rect width="150" height="96" rx="12" class="be-tbox"/><path d="M0 12a12 12 0 0 1 12-12h126a12 12 0 0 1 12 12v14H0z" class="be-thead"/>
+              <text x="12" y="18" class="be-tname">events</text>
+              <text x="12" y="44" class="be-col-n">id</text><text x="138" y="44" class="be-key">PK</text>
+              <text x="12" y="62" class="be-col-n">user_id</text><text x="138" y="62" class="be-key fk">FK</text>
+              <text x="12" y="80" class="be-col-n">payload</text>
+            </g>
+            <!-- foreign keys back to users.id -->
+            <path d="M625 242 C640 242 640 84 625 84" class="be-fk" marker-end="url(#be-arrow)"/>
+            <path d="M625 372 C648 372 648 90 625 90" class="be-fk" marker-end="url(#be-arrow)"/>
+
+            <text x="550" y="440" class="be-s" text-anchor="middle">PostgreSQL · Firebase</text>
+            <text x="315" y="415" class="be-s" text-anchor="middle">Hosted · monitored · backed up</text>
+
+            <!-- moving data: requests (to the right) and responses (back) -->
+            <g class="be-flow">
+              <circle r="4" class="be-req"><animateMotion dur="2.4s" repeatCount="indefinite" begin="0s"><mpath href="#c1"/></animateMotion></circle>
+              <circle r="4" class="be-req"><animateMotion dur="2.4s" repeatCount="indefinite" begin="0.8s"><mpath href="#c2"/></animateMotion></circle>
+              <circle r="4" class="be-req"><animateMotion dur="2.4s" repeatCount="indefinite" begin="1.6s"><mpath href="#c3"/></animateMotion></circle>
+              <circle r="4" class="be-req"><animateMotion dur="2.4s" repeatCount="indefinite" begin="0.4s"><mpath href="#d1"/></animateMotion></circle>
+              <circle r="4" class="be-req"><animateMotion dur="2.4s" repeatCount="indefinite" begin="1.2s"><mpath href="#d2"/></animateMotion></circle>
+              <circle r="4" class="be-req"><animateMotion dur="2.4s" repeatCount="indefinite" begin="2.0s"><mpath href="#d3"/></animateMotion></circle>
+              <circle r="3.5" class="be-res"><animateMotion dur="2.4s" repeatCount="indefinite" begin="1.2s" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#c1"/></animateMotion></circle>
+              <circle r="3.5" class="be-res"><animateMotion dur="2.4s" repeatCount="indefinite" begin="2.0s" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#c2"/></animateMotion></circle>
+              <circle r="3.5" class="be-res"><animateMotion dur="2.4s" repeatCount="indefinite" begin="0.4s" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#c3"/></animateMotion></circle>
+              <circle r="3.5" class="be-res"><animateMotion dur="2.4s" repeatCount="indefinite" begin="1.6s" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#d1"/></animateMotion></circle>
+              <circle r="3.5" class="be-res"><animateMotion dur="2.4s" repeatCount="indefinite" begin="0.2s" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#d2"/></animateMotion></circle>
+              <circle r="3.5" class="be-res"><animateMotion dur="2.4s" repeatCount="indefinite" begin="1.0s" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#d3"/></animateMotion></circle>
+            </g>
+          </svg>
+
+          <div class="be-term" aria-label="Example API request and response">
+            <div class="be-term-bar"><i></i><i></i><i></i><span>GET /v1/athletes?position=ST&amp;grad=2027</span></div>
+<pre><span class="ok">200 OK</span> <span class="dim">· 38 ms · cached</span>
+{
+  <span class="jk">"count"</span>: <span class="jn">132</span>,
+  <span class="jk">"athletes"</span>: [
+    { <span class="jk">"id"</span>: <span class="jn">4812</span>, <span class="jk">"name"</span>: <span class="js">"A. Rivera"</span>, <span class="jk">"position"</span>: <span class="js">"ST"</span> },
+    <span class="dim">…</span>
+  ]
+}</pre>
+          </div>
+          <figcaption class="be-legend"><span><i class="be-req-dot"></i>Request</span><span><i class="be-res-dot"></i>Response</span><span><i class="be-fk-dot"></i>Relation</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
   <section id="scope" class="scoper-sec">
     <div class="wrap">
       <div class="sec-head">
@@ -413,7 +619,7 @@ footer nav a:hover{color:var(--accent)}
     <a class="brand" href="#top" aria-label="Moblicode home"><img src="assets/logo-trim.png?v=7" alt="Moblicode — Mobile App Development" width="122" height="110"></a>
     <nav aria-label="Footer">
       <div><b>Company</b><a href="#work">Work</a><a href="#services">Services</a><a href="#process">Process</a></div>
-      <div><b>Services</b><a href="#services">iOS</a><a href="#services">Android</a><a href="#services">AI features</a></div>
+      <div><b>Services</b><a href="#services">iOS</a><a href="#services">Android</a><a href="#services">AI features</a><a href="#backend">Databases &amp; APIs</a></div>
       <div><b>Contact</b><span>support@moblicode.com</span><span>747 755 1281</span><a href="https://www.linkedin.com/in/ttm182/">LinkedIn</a></div>
     </nav>
     <p class="copy">© 2026 Moblicode. iOS and Android app &amp; game development.</p>
@@ -480,9 +686,26 @@ footer nav a:hover{color:var(--accent)}
   });
   render();
 
+  // Hero circuit lines: a glowing pulse runs along each trace into its end dot.
+  // Every other trace runs in reverse so pulses move left-to-right and right-to-left.
+  document.querySelectorAll('.traces path').forEach((p,i)=>{
+    const L=p.getTotalLength(), seg=110, rev=i%2===1;
+    const spark=p.cloneNode(); spark.setAttribute('class','spark');
+    spark.style.strokeDasharray=seg+' '+(L+seg*2);
+    spark.style.setProperty('--start',(rev?-(L+seg):seg)+'px');
+    spark.style.setProperty('--end',(rev?seg:-(L+seg))+'px');
+    spark.style.setProperty('--delay',(i*0.7)+'s');
+    p.after(spark);
+    const dot=spark.nextElementSibling;
+    if(dot&&dot.tagName==='circle'){ dot.classList.add('lit'); dot.style.setProperty('--delay',(i*0.7 + (rev?-2.2:0))+'s'); }
+  });
+
+  // Respect reduced motion for the backend diagram's moving data
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches){ document.querySelectorAll('.be-visual svg').forEach(s=>{ try{ s.pauseAnimations(); }catch(e){} }); }
+
   // Fade sections in as they scroll into view
   if('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches){
-    const groups=['.proof .wrap > div','.sec-head','.case','.svc article','.scoper > .panel','.steps li','.direct','#contactForm','footer .wrap > *'];
+    const groups=['.proof .wrap > div','.sec-head','.case','.svc article','.be-copy > *','.be-visual','.scoper > .panel','.steps li','.direct','#contactForm','footer .wrap > *'];
     groups.forEach(sel=>{
       let i=0, parent=null;
       document.querySelectorAll(sel).forEach(el=>{
