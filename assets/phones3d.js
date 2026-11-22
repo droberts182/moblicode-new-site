@@ -90,7 +90,7 @@
         new THREE.MeshStandardMaterial({ color: 0x050507, metalness: 0.2, roughness: 0.15 }));
       glass.position.z = zf; g.add(glass);
 
-      const tex = loader.load(d.src, () => { needsRender = true; });
+      const tex = loader.load(d.src, () => { needsRender = true; kick(); });
       tex.encoding = THREE.sRGBEncoding; tex.anisotropy = maxAniso;
       const screen = new THREE.Mesh(flatRounded(sw, sh, SR, 32), new THREE.MeshBasicMaterial({ map: tex, toneMapped: false }));
       screen.position.z = zf + 0.0006; g.add(screen);
