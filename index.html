@@ -5,6 +5,20 @@
 <link rel="icon" href="assets/logo.webp?v=6">
 <style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>Moblicode | iOS &amp; Android App Development</title>
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CW7S22WVKR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-CW7S22WVKR');
+
+  // Count phone taps as leads (contact-form leads are sent after a successful send)
+  document.addEventListener('click', function (e) {
+    var link = e.target.closest && e.target.closest('a[href^="tel:"]');
+    if (link) gtag('event', 'generate_lead', { method: 'phone_tap' });
+  });
+</script>
 <script>
   // Always open at the top: stop the browser from restoring an old scroll position on reload.
   try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch (e) {}
@@ -717,6 +731,7 @@ footer nav a:hover{color:var(--accent)}
         sent.innerHTML='<b>Thanks! Your message is on its way.</b>We’ll reply to <span></span> soon.';
         sent.querySelector('span').textContent=replyTo;
         sent.hidden=false;
+        if (typeof gtag === 'function') gtag('event', 'generate_lead', { method: 'contact_form' });
       }catch(ex){
         fail('We couldn\u2019t send your message just now. Please email support@moblicode.com or call 747 755 1281.');
       }finally{
